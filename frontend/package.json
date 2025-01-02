@@ -10,14 +10,15 @@
     "watch": "vite build --watch"
   },
   "dependencies": {
+    "sass": "^1.83.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "vue": "^3.4.35",
+    "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.1.2",
-    "typescript": "^5.5.3",
-    "vite": "^5.4.0",
-    "vue-tsc": "^2.0.29"
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11",
+    "vue-tsc": "^2.2.0"
   }
 }

@@ -830,3 +830,4 @@
 2025/01/02 10:18:33 [notice] 1#1: start worker process 29
 2025/01/02 10:18:33 [notice] 1#1: start worker process 30
 2025/01/02 10:18:33 [notice] 1#1: start worker process 31
+2025/01/02 11:33:58 [error] 21#21: *44 directory index of "/var/www/frontend/dist/" is forbidden, client: 172.18.0.1, server: , request: "GET / HTTP/1.1", host: "localhost"

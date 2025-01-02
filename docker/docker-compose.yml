@@ -1,0 +1,53 @@
+services:
+  php-fpm:
+    image: php:8.2-fpm
+    tty: true
+    volumes:
+      - ${BACKEND_PATH}:/var/www/backend
+      - ${PHP_CONFIG_PATH}/local.ini:/usr/local/etc/php/conf.d/local.ini
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+    user: 1000:1000
+    working_dir: /var/www/backend
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    tty: true
+    restart: always
+    volumes:
+      - ${BACKEND_PATH}:/var/www/backend/
+      - ${FRONTEND_PATH}:/var/www/frontend/
+      - ${NGINX_CONFIG_PATH}/conf.d/:/etc/nginx/conf.d/
+      - ${NGINX_CONFIG_PATH}/log/:/var/log/nginx/
+    ports:
+      - ${WEB_HTTP_PORT}:80
+      - ${WEB_HTTPS_PORT}:443
+    depends_on:
+      - php-fpm
+  
+  node:
+    tty: true
+    user: 1000:1000
+    restart: always
+    volumes:
+      - ${FRONTEND_PATH}:/var/www
+    build:
+      context: ${NODE_CONFIG_PATH}
+      dockerfile: Dockerfile
+    working_dir: /var/www
+    
+  db:
+    image: postgres:latest
+    tty: true
+    restart: always
+    volumes:
+      - ${DB_DATA_PATH}:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}

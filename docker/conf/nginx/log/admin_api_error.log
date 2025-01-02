@@ -1,0 +1,4 @@
+2025/01/02 10:15:47 [error] 23#23: *6 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.1, server: , request: "GET /backend/ HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost"
+2025/01/02 10:15:55 [error] 23#23: *6 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.1, server: , request: "GET /backend/ HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost"
+2025/01/02 10:15:56 [error] 23#23: *6 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.1, server: , request: "GET /backend/ HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost"
+2025/01/02 10:15:57 [error] 23#23: *6 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.1, server: , request: "GET /backend/ HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost"

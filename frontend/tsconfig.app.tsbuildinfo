@@ -1,1 +1,1 @@
-{"root":["./src/main.ts","./src/vite-env.d.ts","./src/router/index.ts","./src/App.vue","./src/components/Navbar.vue","./src/pages/Home/Home.vue"],"errors":true,"version":"5.7.2"}
+{"root":["./src/main.ts","./src/shims-vue.d.ts","./src/vite-env.d.ts","./src/router/index.ts","./src/App.vue","./src/components/Navbar.vue","./src/pages/Home/Home.vue"],"version":"5.7.2"}

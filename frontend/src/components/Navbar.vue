@@ -1,21 +1,27 @@
 <template>
-  <nav class="navbar">
-    <ul>
-      <li><a>Главная</a></li>
-      <li><a>Математика</a></li>
-      <li><a>Физика</a></li>
-    </ul>
-  </nav>
+  <div class="card">
+    <Menubar :model="menuItems">
+      <template #start>
+        <Logo></Logo>
+      </template>
+    </Menubar>
+  </div>
 </template>
 
 <script setup>
+import Menubar from 'primevue/menubar';
+import { ref } from 'vue';
+import Logo from "@/assets/logo.svg";
 
+const menuItems = ref([
+  {
+    label: "Главная",
+  },
+  {
+    label: "Физика"
+  },
+  {
+    label: "Информатика"
+  }
+])
 </script>
-
-<style lang="scss">
-.navbar {
-  height: 100px;
-  background-color: #1E1E1E;
-  color: white;
-}
-</style>

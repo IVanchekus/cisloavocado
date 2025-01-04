@@ -10,15 +10,22 @@
     "watch": "vite build --watch"
   },
   "dependencies": {
+    "@primevue/themes": "^4.2.5",
+    "primeflex": "^3.3.1",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.2.5",
     "sass": "^1.83.0",
+    "tailwindcss-primeui": "^0.3.4",
+    "vite-svg-loader": "^5.1.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@types/node": "^22.10.5",
     "@vitejs/plugin-vue": "^5.2.1",
     "typescript": "^5.7.2",
-    "vite": "^5.4.11",
+    "vite": "^6.0.7",
     "vue-tsc": "^2.2.0"
   }
 }

@@ -5,7 +5,6 @@ import PrimeVue from 'primevue/config';
 import "./assets/reset.css";
 import 'primeicons/primeicons.css'; // Иконки
 import 'primeflex/primeflex.css'; // PrimeFlex
-import Lara from "@primevue/themes/lara";
 import useDefinePreset from '@/utils/useDefinePreset';
 
 createApp(App)

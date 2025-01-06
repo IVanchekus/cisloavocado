@@ -6,12 +6,13 @@ import "./assets/reset.css";
 import 'primeicons/primeicons.css'; // Иконки
 import 'primeflex/primeflex.css'; // PrimeFlex
 import Lara from "@primevue/themes/lara";
+import useDefinePreset from '@/utils/useDefinePreset';
 
 createApp(App)
   .use(router)
   .use(PrimeVue, { 
     theme: {
-      preset: Lara,
+      preset: useDefinePreset,
       options: {
         darkModeSelector: 'system',
       }

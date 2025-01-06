@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [vue(), tsconfigPaths(), svgLoader()],
   resolve: {
     alias: {
-      "@/": "./src/"
+      "@/": "/src/"
     }
   }
 })

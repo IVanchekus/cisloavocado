@@ -59,4 +59,8 @@ const menuItems = ref([
 :deep(.p-menubar-end) {
   margin-left: 0;
 }
+
+:deep(.p-button-label), :deep(.p-menubar-item-label) {
+  font-weight: 500;
+}
 </style>

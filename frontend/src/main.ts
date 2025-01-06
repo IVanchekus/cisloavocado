@@ -2,10 +2,15 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import PrimeVue from 'primevue/config';
+
 import "./assets/reset.css";
 import 'primeicons/primeicons.css'; // Иконки
 import 'primeflex/primeflex.css'; // PrimeFlex
+import "@/assets/fonts/fonts.scss";
+import "@/assets/style.scss";
+
 import useDefinePreset from '@/utils/useDefinePreset';
+
 
 createApp(App)
   .use(router)

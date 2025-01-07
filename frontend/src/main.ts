@@ -16,9 +16,9 @@ createApp(App)
   .use(router)
   .use(PrimeVue, { 
     theme: {
-      preset: useDefinePreset,
+      preset: useDefinePreset(),
       options: {
-        darkModeSelector: 'system',
+        darkModeSelector: false,
       }
     }
   })

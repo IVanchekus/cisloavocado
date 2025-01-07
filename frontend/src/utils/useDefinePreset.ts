@@ -2,12 +2,12 @@ import { definePreset } from "@primevue/themes";
 import Lara from '@primevue/themes/lara';
 import { $dt } from "@primevue/themes";
 
-const useDefinePreset = definePreset(Lara, {
+const useDefinePreset = () => definePreset(Lara, {
   semantic: {
     primary: {
       50: "#FFFFF0",
       100: "#FFFDE7",
-      200: "#FFF598",
+      200: "#F9EC78",
       300: "#FFEF6B",
       400: "#F5E339",
       500: "#FFD700",

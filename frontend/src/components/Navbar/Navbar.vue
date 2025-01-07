@@ -6,7 +6,7 @@
       :pt="passThrough"
     >
       <template #start>
-        <Logo></Logo>
+        <Logo @click="router.push({ name: 'home' });"></Logo>
       </template>
       <template #end>
         <ButtonGroup>
@@ -22,19 +22,26 @@
 import { ButtonGroup, Button, Menubar } from 'primevue';
 import { ref } from 'vue';
 import Logo from "@/assets/logo.svg";
+import router from "@/router/index";
 
 const menuItems = ref([
   {
     label: "Главная",
     command: () => {
-      console.log("click")
+      router.push({ name: 'home' });
     }
   },
   {
-    label: "Физика"
+    label: "Математика",
+    command: () => {
+      router.push({ name: 'maths' });
+    }
   },
   {
-    label: "Информатика"
+    label: "Физика",
+    command: () => {
+      router.push({ name: 'physics' });
+    }
   }
 ])
 

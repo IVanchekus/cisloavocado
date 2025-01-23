@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { defineSlots } from 'vue';
 import { ISlots } from './PageTemplate.types';
 

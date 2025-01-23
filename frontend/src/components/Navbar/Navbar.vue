@@ -11,7 +11,7 @@
       <template #end>
         <ButtonGroup>
           <Button label="Регистрация" />
-          <Button label="Войти" />
+          <Button label="Войти" @click="router.push({ name: 'login' })"/>
         </ButtonGroup>
       </template>
     </Menubar>

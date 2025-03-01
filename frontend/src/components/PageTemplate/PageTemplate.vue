@@ -13,7 +13,7 @@ const slots = defineSlots<ISlots>();
 
 <style scoped>
 .page-template {
-  height: 100px;
+  height: 100%;
   padding: 19px 11.5%;
 }
 

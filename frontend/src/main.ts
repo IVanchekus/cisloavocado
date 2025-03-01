@@ -18,7 +18,7 @@ createApp(App)
     theme: {
       preset: useDefinePreset(),
       options: {
-        darkModeSelector: false,
+        darkModeSelector: true,
       }
     }
   })

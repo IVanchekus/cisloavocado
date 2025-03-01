@@ -72,7 +72,7 @@ const passThrough = {
 }
 
 :deep(.p-menubar-item-link) {
-  color: white;
+  /* color: white; */
 }
 
 :deep(.p-menubar-item-link:hover) {

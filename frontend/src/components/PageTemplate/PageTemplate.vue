@@ -17,7 +17,7 @@ const slots = defineSlots<ISlots>();
   padding: 19px 11.5%;
 }
 
-@media (max-width: 1248px) {
+@media (max-width: 961px) {
   .page-template {
     padding: 19px 15px;
   }

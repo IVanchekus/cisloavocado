@@ -20,6 +20,4 @@ const useDefinePreset = () => definePreset(Lara, {
   }
 })
 
-console.log($dt('primary.color'));
-
 export default useDefinePreset;

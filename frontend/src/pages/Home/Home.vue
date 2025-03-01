@@ -63,7 +63,7 @@ import HomeSubjects from '@/pages/Home/HomeSubjects.vue';
   }
 }
 
-@media (max-width: 1248px) {
+@media (max-width: 961px) {
   .home__info-squares {
     justify-content: center;
   }

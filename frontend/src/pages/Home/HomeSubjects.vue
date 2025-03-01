@@ -50,7 +50,7 @@ const props = defineProps<IProps>();
   }
 }
 
-@media (max-width: 1248px) {
+@media (max-width: 961px) {
   .home__exam-name {
     font-size: 24px;
   }

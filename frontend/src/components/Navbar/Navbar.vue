@@ -9,9 +9,10 @@
         <Logo @click="router.push({ name: 'home' });"></Logo>
       </template>
       <template #end>
-        <ButtonGroup>
-          <Button label="Регистрация" />
-          <Button label="Войти" @click="router.push({ name: 'login' })"/>
+        <ButtonGroup v-if ="!isHiddenEnterItems">
+          <!-- <Button label="Регистрация" />
+          <Button label="Войти" @click="router.push({ name: 'login' })"/> -->
+          <Button v-for="item in menuEnterItems" :key="item.label" :label="item.label" @click="item.command()"/>
         </ButtonGroup>
       </template>
     </Menubar>
@@ -20,11 +21,11 @@
 
 <script setup>
 import { ButtonGroup, Button, Menubar } from 'primevue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import Logo from "@/assets/logo.svg";
 import router from "@/router/index";
 
-const menuItems = ref([
+const menuMainItems = ref([
   {
     label: "Главная",
     command: () => {
@@ -45,6 +46,41 @@ const menuItems = ref([
   }
 ])
 
+const menuEnterItems = ref([
+  {
+    label: "Регистрация",
+    command: () => {
+      router.push({ name: 'register' });
+    }
+  },
+  {
+    label: "Войти",
+    command: () => {
+      router.push({ name: 'login' });
+    }
+  }
+])
+
+const isHiddenEnterItems = ref(false);
+
+const screenWidth = ref(window.innerWidth);
+window.onresize = () => screenWidth.value = window.innerWidth; 
+
+const menuItems = computed(() => {
+  if (screenWidth.value < 961) {
+    isHiddenEnterItems.value = true
+    return [
+      ...menuMainItems.value,
+      ...menuEnterItems.value
+    ]
+  } else {
+    isHiddenEnterItems.value = false
+    return [
+      ...menuMainItems.value
+    ]
+  }
+});
+
 const passThrough = {
   rootlist: {
     style: {
@@ -61,7 +97,7 @@ const passThrough = {
   background-color: #1E1E1E;
 }
 
-@media (max-width: 1248px) {
+@media (max-width: 961px) {
   .menubar {
     padding: 23px 15px;
   }
@@ -69,10 +105,6 @@ const passThrough = {
 
 .menubar__item {
   margin: 0 auto;
-}
-
-:deep(.p-menubar-item-link) {
-  /* color: white; */
 }
 
 :deep(.p-menubar-item-link:hover) {
@@ -98,5 +130,9 @@ const passThrough = {
 :deep(.p-button) {
   background: var(--p-primary-400);
   border: 1px solid var(--p-primary-400);
+}
+
+:deep(.p-menubar-button) {
+  margin-left: auto;
 }
 </style>

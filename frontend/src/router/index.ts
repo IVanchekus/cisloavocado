@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/pages/Home/Home.vue";
 import Maths from "@/pages/Maths/Maths.vue";
 import Physics from "@/pages/Physics/Physics.vue";
-import Login from "@/pages/Auth/Login.vue";
+import Login from "@/pages/Auth/Login/Login.vue";
+import Register from "@/pages/Auth/Register/Register.vue";
 
 const routes = [
   {
@@ -24,6 +25,14 @@ const routes = [
     path: "/login",
     name: "login",
     component: Login,
+    meta: {
+      isShowNavbar: false
+    }
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register,
     meta: {
       isShowNavbar: false
     }

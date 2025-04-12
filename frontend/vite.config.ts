@@ -4,7 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import svgLoader from 'vite-svg-loader';
 
 export default defineConfig({
-  plugins: [vue(), tsconfigPaths(), svgLoader()],
+  plugins: [vue(), tsconfigPaths(), svgLoader(), ],
   resolve: {
     alias: {
       "@/": "/src/"

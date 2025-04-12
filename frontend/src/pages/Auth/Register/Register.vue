@@ -5,17 +5,17 @@
             <div>
                 <label>Имя</label>
                 <input v-model="name" type="text" />
-                <span v-if="errors.name">{{ errors.name[0] }}</span>
+                <!-- <span v-if="errors.name">{{ errors.name[0] }}</span> -->
             </div>
             <div>
                 <label>Email</label>
                 <input v-model="email" type="email" />
-                <span v-if="errors.email">{{ errors.email[0] }}</span>
+                <!-- <span v-if="errors.email">{{ errors.email[0] }}</span> -->
             </div>
             <div>
                 <label>Пароль</label>
                 <input v-model="password" type="password" />
-                <span v-if="errors.password">{{ errors.password[0] }}</span>
+                <!-- <span v-if="errors.password">{{ errors.password[0] }}</span> -->
             </div>
             <div>
                 <label>Подтвердите пароль</label>
@@ -28,8 +28,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import axios from 'axios';
 import { useRouter } from 'vue-router';
+import Repository from '@/api/Auth/AuthRepository';
 
 const router = useRouter();
 const name = ref('');
@@ -41,15 +41,17 @@ const errors = ref({});
 const register = async () => {
     errors.value = {};
     try {
-        const response = await axios.post('http://localhost/backend/api/register', {
-            name: name.value,
-            email: email.value,
-            password: password.value,
-            password_confirmation: password_confirmation.value,
-        });
+        // const response = await axios.post('http://localhost/backend/register', {
+        //     name: name.value,
+        //     email: email.value,
+        //     password: password.value,
+        //     password_confirmation: password_confirmation.value,
+        // });
+        const responce = await Repository.register(name.value, email.value, password.value, password_confirmation.value);
+        console.log(responce);
 
-        localStorage.setItem('token', response.data.token);
-        router.push('/dashboard'); // Перенаправление после успешной регистрации
+        // localStorage.setItem('token', response.data.token);
+        // router.push('/dashboard'); // Перенаправление после успешной регистрации
     } catch (error: any) {
         if (error.response && error.response.data.errors) {
             errors.value = error.response.data.errors;

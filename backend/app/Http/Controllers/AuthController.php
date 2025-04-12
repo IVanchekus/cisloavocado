@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -18,12 +19,26 @@ class AuthController extends Controller
 
         $user = User::create($validatedData);
 
-        $accessToken = $user->createToken('authToken')->accessToken;
+        // $accessToken = $user->createToken('authToken')->accessToken;
 
-        return response(['user' => $user, 'access_token' => $accessToken]);
+        return response(['user' => $user]);
     }
 
-    public function users() {
-        return "123";
+    public function login(Request $request)
+    {
+        dd($request);
+        $credentials = $request->only('email', 'password');
+
+        Auth::attempt($credentials);
+        
+        $user = Auth::user();
+        $token = $user->createToken('authToken')->accessToken;
+
+        return response(['user' => $user, 'access_token' => $token]);
+    }
+
+    public function user() {
+        dd(Auth::user());
+        return Auth::user();
     }
 }

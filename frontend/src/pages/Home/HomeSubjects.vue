@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { IProps } from '@/pages/Home/HomeSubjects.types';
 
-const props = defineProps<IProps>();
+defineProps<IProps>();
 </script>
 
 <style lang="scss" scoped>

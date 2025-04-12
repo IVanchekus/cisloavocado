@@ -1,6 +1,5 @@
 import { definePreset } from "@primevue/themes";
 import Lara from '@primevue/themes/lara';
-import { $dt } from "@primevue/themes";
 
 const useDefinePreset = () => definePreset(Lara, {
   semantic: {

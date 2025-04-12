@@ -5,10 +5,10 @@
 </template>
 
 <script setup lang="ts">
+import Repository from '@/api/Auth/AuthRepository';
 import { Button } from 'primevue';
-import axios from 'axios';
 
 const test = async () => {
-  const response = await axios.get('http://localhost/backend/api/users', { });
+  await Repository.user();
 }
 </script>

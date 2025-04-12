@@ -10,6 +10,7 @@ import "@/assets/fonts/fonts.scss";
 import "@/assets/style.scss";
 
 import useDefinePreset from '@/utils/useDefinePreset';
+import { axiosPlugin } from '@/plugins/axios';
 
 
 createApp(App)
@@ -22,5 +23,6 @@ createApp(App)
       }
     }
   })
+  .use(axiosPlugin)
   .mount('#app');
 

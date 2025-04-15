@@ -26,7 +26,8 @@ const routes = [
     name: "login",
     component: Login,
     meta: {
-      isShowNavbar: false
+      isShowNavbar: false,
+      pageTemplateHeight: '100vh'
     }
   },
   {
@@ -34,7 +35,8 @@ const routes = [
     name: "register",
     component: Register,
     meta: {
-      isShowNavbar: false
+      isShowNavbar: false,
+      pageTemplateHeight: '100vh'
     }
   }
 ]

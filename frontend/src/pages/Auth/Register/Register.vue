@@ -1,35 +1,49 @@
 <template>
+  <div class="main-container">
     <div class="register-container">
-        <h2>Регистрация</h2>
-        <form @submit.prevent="register">
-            <div>
-                <label>Имя</label>
-                <input v-model="name" type="text" />
-                <!-- <span v-if="errors.name">{{ errors.name[0] }}</span> -->
-            </div>
-            <div>
-                <label>Email</label>
-                <input v-model="email" type="email" />
-                <!-- <span v-if="errors.email">{{ errors.email[0] }}</span> -->
-            </div>
-            <div>
-                <label>Пароль</label>
-                <input v-model="password" type="password" />
-                <!-- <span v-if="errors.password">{{ errors.password[0] }}</span> -->
-            </div>
-            <div>
-                <label>Подтвердите пароль</label>
-                <input v-model="password_confirmation" type="password" />
-            </div>
-            <button type="submit">Зарегистрироваться</button>
-        </form>
+      <div class="register-container__title">Регистрация</div>
+      <Form @submit="onRegister" :validation-schema="schema" class="flex flex-column row-gap-3">
+        <div class="flex flex-column mw-283">
+          <label class="mr-auto">Имя:</label>
+          <Field name="name" type="text" v-slot="{ field, meta, errors}">
+            <InputText :invalid="errors.length !== 0" v-bind="field"/>
+            <Message name="name" size="small" severity="error" variant="simple">{{ errors[0] }}</Message>
+          </Field>
+        </div>
+        <div class="flex flex-column mw-283">
+          <label class="mr-auto">Email:</label>
+          <Field name="email" type="email" v-slot="{ field, meta, errors}">
+            <InputText :invalid="errors.length !== 0" v-bind="field" />
+            <Message name="email" size="small" severity="error" variant="simple">{{ errors[0] }}</Message>
+          </Field>
+        </div>
+        <div class="flex flex-column mw-283">
+          <label class="mr-auto">Пароль:</label>
+          <Field name="password" type="password" v-slot="{ field, meta, errors}">
+            <InputText :invalid="errors.length !== 0" v-bind="field" />
+            <Message name="password" size="small" severity="error" variant="simple">{{ errors[0] }}</Message>
+          </Field>
+        </div>
+        <div class="flex flex-column mw-283">
+          <label class="mr-auto">Подтвердите пароль:</label>
+          <Field name="password_confirmation" type="password" v-slot="{ field, meta, errors}">
+            <InputText :invalid="errors.length !== 0" v-bind="field" />
+            <Message name="password_confirmation" size="small" severity="error" variant="simple">{{ errors[0] }}</Message>
+          </Field>
+        </div>
+        <Button type="submit" color="primary">Зарегистрироваться</Button>
+      </Form>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Repository from '@/api/Auth/AuthRepository';
+import { Field, Form } from 'vee-validate';
+import * as yup from 'yup';
+import { Button, InputText, Message } from 'primevue';
 
 const router = useRouter();
 const name = ref('');
@@ -38,20 +52,22 @@ const password = ref('');
 const password_confirmation = ref('');
 const errors = ref({});
 
-const register = async () => {
-    errors.value = {};
-    try {
-        // const response = await axios.post('http://localhost/backend/register', {
-        //     name: name.value,
-        //     email: email.value,
-        //     password: password.value,
-        //     password_confirmation: password_confirmation.value,
-        // });
-        const responce = await Repository.register(name.value, email.value, password.value, password_confirmation.value);
-        console.log(responce);
+const schema = yup.object({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+    password_confirmation: yup.string().required(),
+})
 
-        // localStorage.setItem('token', response.data.token);
-        // router.push('/dashboard'); // Перенаправление после успешной регистрации
+const onRegister = async (values: any) => {
+  console.log(values);
+  console.log(123);
+  return;
+    try {
+        const { data } = await Repository.register(name.value, email.value, password.value, password_confirmation.value);
+        if (data.status === 'success') {
+            router.push({ name: 'home' });
+        }
     } catch (error: any) {
         if (error.response && error.response.data.errors) {
             errors.value = error.response.data.errors;
@@ -60,12 +76,37 @@ const register = async () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.main-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .register-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: 536px;
+  min-height: 521px;
+  background-color: white;
+  color: #1E1E1E;
+  border-radius: 16px;
+
+  label {
+    font-weight: 500;
+    font-size: 25px
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 60px;
+  }
+}
+
+.mw-283 {
+  min-width: 283px;
 }
 </style>

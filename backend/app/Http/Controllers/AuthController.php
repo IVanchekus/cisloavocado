@@ -28,9 +28,10 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        Auth::attempt($credentials);
-
-        return response()->json(['status' => 'success']);
+        if (Auth::attempt($credentials)) {
+            return response()->json(['status' => 'success']);  
+        }
+        return response()->json(['status' => 'error', 'message' => 'Invalid credentials'], 401);
     }
 
     public function user() {

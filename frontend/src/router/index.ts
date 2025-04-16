@@ -2,8 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/pages/Home/Home.vue";
 import Maths from "@/pages/Maths/Maths.vue";
 import Physics from "@/pages/Physics/Physics.vue";
-import Login from "@/pages/Auth/Login/Login.vue";
-import Register from "@/pages/Auth/Register/Register.vue";
+import Auth from "@/pages/Auth/Auth.vue";
 
 const routes = [
   {
@@ -24,19 +23,25 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: Login,
+    component: Auth,
     meta: {
       isShowNavbar: false,
       pageTemplateHeight: '100vh'
+    },
+    props: {
+      type: 'login'
     }
   },
   {
     path: "/register",
     name: "register",
-    component: Register,
+    component: Auth,
     meta: {
       isShowNavbar: false,
       pageTemplateHeight: '100vh'
+    },
+    props: {
+      type: 'register'
     }
   }
 ]

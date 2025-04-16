@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import PrimeVue from 'primevue/config';
+import { ToastService } from 'primevue';
 
 import "./assets/reset.css";
 import 'primeicons/primeicons.css'; // Иконки
@@ -23,6 +24,7 @@ createApp(App)
       }
     }
   })
+  .use(ToastService)
   .use(axiosPlugin)
   .mount('#app');
 

@@ -3,7 +3,7 @@ import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 
 export default async function authMiddleware(
   to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
+  _from: RouteLocationNormalized,
   next: NavigationGuardNext,
 ) {
   const authStore = useAuthStore();

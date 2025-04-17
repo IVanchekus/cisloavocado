@@ -13,8 +13,8 @@ export const useAuthStore = defineStore("auth", {
         const { data } = await AuthRepository.user();
         this.user = data;
         this.isAuth = true;
-      } catch (error) {
-        console.log(error);
+      } catch {
+        console.log('Unauthorized');
       } finally {
         this.checkAuth();
       }

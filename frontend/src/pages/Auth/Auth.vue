@@ -1,8 +1,8 @@
 <template>
   <div class="main-container">
     <div class="flex flex-column">
-      <Logo class="mx-auto mb-3"></Logo>
       <div class="register-container">
+        <Logo class="mx-auto" style="position: absolute; top: -80px"></Logo>
         <div class="register-container__title mb-2">{{ type === 'login' ? 'Вход' : 'Регистрация' }}</div>
         <Form @submit="onAuth" :validation-schema="schema" class="flex flex-column align-items-center">
           <div v-for="field in fields" :key="field.name" class="flex flex-column mw-283">
@@ -34,9 +34,11 @@ import { Button, InputText, Message, Toast } from 'primevue';
 import Logo from "@/assets/logo.svg";
 import { IProps } from './Auth.types';
 import { useToast } from 'primevue';
+import { useAuthStore } from '@/store/authStore';
 
 const toast = useToast();
 const router = useRouter();
+const authStore = useAuthStore();
 
 const props = defineProps<IProps>();
 
@@ -77,6 +79,7 @@ const onRegister = async (values: any) => {
   try {
     const { data } = await Repository.register(values);
     if (data.status === 'success') {
+      authStore.login();
       router.push({ name: 'home' });
     }
   } catch (error: any) {
@@ -88,6 +91,7 @@ const onLogin = async (values: any) => {
   try {
     const { data } = await Repository.login(values);
     if (data.status === 'success') {
+      authStore.login();
       router.push({ name: 'home' });
     }
   } catch (error: any) {
@@ -123,6 +127,7 @@ const onAuth = async (values: any) => {
   background-color: white;
   color: #1E1E1E;
   border-radius: 16px;
+  position: relative;
 
   label {
     font-weight: 500;

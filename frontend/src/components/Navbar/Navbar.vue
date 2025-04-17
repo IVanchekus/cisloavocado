@@ -10,9 +10,8 @@
       </template>
       <template #end>
         <ButtonGroup v-if ="!isHiddenEnterItems">
-          <!-- <Button label="Регистрация" />
-          <Button label="Войти" @click="router.push({ name: 'login' })"/> -->
-          <Button v-for="item in menuEnterItems" :key="item.label" :label="item.label" @click="item.command()"/>
+          <Button v-if="!authStore.isAuth" v-for="item in menuEnterItems" :key="item.label" :label="item.label" @click="item.command()" />
+          <Button v-else v-for="item in menuAuthItems" :key="item.label" :label="item.label" @click="item.command()" />
         </ButtonGroup>
       </template>
     </Menubar>
@@ -21,9 +20,15 @@
 
 <script setup>
 import { ButtonGroup, Button, Menubar } from 'primevue';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import Logo from "@/assets/logo.svg";
 import router from "@/router/index";
+import { useAuthStore } from '@/store/authStore';
+
+const authStore = useAuthStore();
+
+onMounted(() => {
+});
 
 const menuMainItems = ref([
   {
@@ -57,6 +62,15 @@ const menuEnterItems = ref([
     label: "Войти",
     command: () => {
       router.push({ name: 'login' });
+    }
+  }
+])
+
+const menuAuthItems = ref([
+  {
+    label: "Выйти",
+    command: () => {
+      authStore.logout();
     }
   }
 ])

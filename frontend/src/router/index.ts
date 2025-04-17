@@ -1,29 +1,26 @@
+import { useAuthStore } from "@/store/authStore";
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/pages/Home/Home.vue";
-import Maths from "@/pages/Maths/Maths.vue";
-import Physics from "@/pages/Physics/Physics.vue";
-import Auth from "@/pages/Auth/Auth.vue";
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: () => import("@/pages/Home/Home.vue")
   },
   {
     path: "/physics",
     name: "physics",
-    component: Physics 
+    component: () => import("@/pages/Physics/Physics.vue")
   },
   {
     path: "/maths",
     name: "maths",
-    component: Maths
+    component: () => import("@/pages/Maths/Maths.vue")
   },
   {
     path: "/login",
     name: "login",
-    component: Auth,
+    component: () => import("@/pages/Auth/Auth.vue"),
     meta: {
       isShowNavbar: false,
       pageTemplateHeight: '100vh'
@@ -35,7 +32,7 @@ const routes = [
   {
     path: "/register",
     name: "register",
-    component: Auth,
+    component: () => import("@/pages/Auth/Auth.vue"),
     meta: {
       isShowNavbar: false,
       pageTemplateHeight: '100vh'
@@ -50,5 +47,15 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+
+  if (!authStore.isCheckedAuth) {
+    authStore.login();
+  }
+
+  next();
+});
 
 export default router;

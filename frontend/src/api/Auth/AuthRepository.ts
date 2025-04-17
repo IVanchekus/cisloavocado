@@ -14,5 +14,8 @@ export default {
   },
   user: async () => {
     return await Repository.get(`${resource}/user`);
+  },
+  logout: async () => {
+    return await Repository.post(`${resource}/logout`);
   }
 };

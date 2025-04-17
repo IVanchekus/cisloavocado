@@ -1,2 +1,18 @@
-Welcome to cislo avocado!
-tg: https://t.me/avocado_school
+# Добро пожаловать на сайт Число Авокадо!
+
+
+# 🚀 Запуск проекта
+
+## 🐳 Шаг 1: Запуск Docker-сервисов
+
+1) Перейдите в папку `./docker` и запустите контейнеры:
+
+```bash
+cd docker
+docker compose up -d
+```
+
+2) Перейдите в папку `./backend`, разверните бэк
+3) Перейдите в папку `./frontend`, разверните фронт
+4) Папка `nginx-conf` - конфиг для https
+

@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { defineSlots } from 'vue';
-import { ISlots } from './PageTemplate.types';
+import { defineSlots } from "vue";
+import { ISlots } from "./PageTemplate.types";
 
 const slots = defineSlots<ISlots>();
 </script>

@@ -3,7 +3,7 @@ import { ILogin, IRegister } from "./AuthRepository.types";
 
 const Repository = useAxios();
 
-const resource = 'auth';
+const resource = "auth";
 
 export default {
   login: async (data: ILogin) => {
@@ -17,5 +17,5 @@ export default {
   },
   logout: async () => {
     return await Repository.post(`${resource}/logout`);
-  }
+  },
 };

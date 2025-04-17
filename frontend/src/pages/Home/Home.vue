@@ -5,16 +5,30 @@
       <div class="home__school-name">Онлайн школа «Число Авокадо»</div>
     </div>
     <div class="home__info-squares">
-      <div class="home__block-column flex align-items-center justify-content-center gap-8">
+      <div
+        class="home__block-column flex align-items-center justify-content-center gap-8"
+      >
         <div class="home__info-text">
-          Познай суть физики и математики с Числом Авокадо: Семена знаний, плод успеха!
+          Познай суть физики и математики с Числом Авокадо: Семена знаний, плод
+          успеха!
         </div>
-        <HomeSubjects t-subject="Физика" b-subject="Математика" exam-name="ЕГЭ" />
+        <HomeSubjects
+          t-subject="Физика"
+          b-subject="Математика"
+          exam-name="ЕГЭ"
+        />
       </div>
-      <div class="home__block-column flex align-items-center justify-content-center gap-8">
-        <HomeSubjects t-subject="Математика" b-subject="Физика" exam-name="ОГЭ" />
+      <div
+        class="home__block-column flex align-items-center justify-content-center gap-8"
+      >
+        <HomeSubjects
+          t-subject="Математика"
+          b-subject="Физика"
+          exam-name="ОГЭ"
+        />
         <div class="home__info-text">
-          Физика и математика станут легкими: Насладись учебой с практикой и ответами!
+          Физика и математика станут легкими: Насладись учебой с практикой и
+          ответами!
         </div>
       </div>
     </div>
@@ -22,9 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import HomeSubjects from '@/pages/Home/HomeSubjects.vue';
-
-
+import HomeSubjects from "@/pages/Home/HomeSubjects.vue";
 </script>
 
 <style lang="scss" scoped>

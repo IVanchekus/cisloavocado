@@ -1,5 +1,7 @@
 <template>
-  <div class="home__subjects flex align-items-center justify-content-center gap-3">
+  <div
+    class="home__subjects flex align-items-center justify-content-center gap-3"
+  >
     <div>
       <div class="home__subj-name">{{ tSubject }}</div>
       <div class="divider-line flex align-items-center">
@@ -13,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { IProps } from '@/pages/Home/HomeSubjects.types';
+import { IProps } from "@/pages/Home/HomeSubjects.types";
 
 defineProps<IProps>();
 </script>
@@ -22,7 +24,7 @@ defineProps<IProps>();
 .home {
   &__subjects {
     color: black;
-    background: #FFF598;
+    background: #fff598;
     width: 461px;
     height: 182px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -42,7 +44,7 @@ defineProps<IProps>();
   &__line {
     width: 273px;
     height: 0;
-    border: 1px solid rgb(30, 30, 30);;
+    border: 1px solid rgb(30, 30, 30);
   }
 
   &__vector {

@@ -8,16 +8,16 @@ const axiosPlugin = {
     axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
     // Выставить CSRF-токен
-    axios.get('/sanctum/csrf-cookie');
+    axios.get("/sanctum/csrf-cookie");
 
     app.config.globalProperties.$axios = axios;
 
-    provide('$axios', axios);
-  }
-}
+    provide("$axios", axios);
+  },
+};
 
 const useAxios = () => {
   return axios;
-}
+};
 
 export { axiosPlugin, useAxios };

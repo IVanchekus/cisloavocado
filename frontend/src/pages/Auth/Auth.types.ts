@@ -1,3 +1,3 @@
 export type IProps = {
-  type: 'login' | 'register',
-}
+  type: "login" | "register";
+};

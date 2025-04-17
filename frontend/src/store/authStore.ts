@@ -1,11 +1,11 @@
-import AuthRepository from '@/api/Auth/AuthRepository';
-import { defineStore } from 'pinia';
+import AuthRepository from "@/api/Auth/AuthRepository";
+import { defineStore } from "pinia";
 
-export const useAuthStore = defineStore('auth', {
+export const useAuthStore = defineStore("auth", {
   state: () => ({
     isAuth: false,
     isCheckedAuth: false,
-    user: {}
+    user: {},
   }),
   actions: {
     async login() {
@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async logout() {
       try {
-        const { data } = await AuthRepository.logout();
+        await AuthRepository.logout();
         this.isAuth = false;
         this.user = {};
       } catch (error) {
@@ -30,6 +30,6 @@ export const useAuthStore = defineStore('auth', {
     },
     checkAuth() {
       this.isCheckedAuth = true;
-    }
-  }
+    },
+  },
 });

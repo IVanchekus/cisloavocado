@@ -1,21 +1,21 @@
-import { useAuthStore } from "@/store/authStore";
 import { createRouter, createWebHistory } from "vue-router";
+import authMiddleware from "./middlewares/auth";
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: () => import("@/pages/Home/Home.vue")
+    component: () => import("@/pages/Home/Home.vue"),
   },
   {
     path: "/physics",
     name: "physics",
-    component: () => import("@/pages/Physics/Physics.vue")
+    component: () => import("@/pages/Physics/Physics.vue"),
   },
   {
     path: "/maths",
     name: "maths",
-    component: () => import("@/pages/Maths/Maths.vue")
+    component: () => import("@/pages/Maths/Maths.vue"),
   },
   {
     path: "/login",
@@ -23,11 +23,11 @@ const routes = [
     component: () => import("@/pages/Auth/Auth.vue"),
     meta: {
       isShowNavbar: false,
-      pageTemplateHeight: '100vh'
+      pageTemplateHeight: "100vh",
     },
     props: {
-      type: 'login'
-    }
+      type: "login",
+    },
   },
   {
     path: "/register",
@@ -35,27 +35,21 @@ const routes = [
     component: () => import("@/pages/Auth/Auth.vue"),
     meta: {
       isShowNavbar: false,
-      pageTemplateHeight: '100vh'
+      pageTemplateHeight: "100vh",
     },
     props: {
-      type: 'register'
-    }
-  }
-]
+      type: "register",
+    },
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
 
-router.beforeEach((to, from, next) => {
-  const authStore = useAuthStore();
-
-  if (!authStore.isCheckedAuth) {
-    authStore.login();
-  }
-
-  next();
+router.beforeEach(async (to, from, next) => {
+  authMiddleware(to, from, next);
 });
 
 export default router;

@@ -1,17 +1,27 @@
 <template>
   <div class="card">
-    <Menubar
-      :model="menuItems"
-      class="menubar"
-      :pt="passThrough"
-    >
+    <Menubar :model="menuItems" class="menubar" :pt="passThrough">
       <template #start>
-        <Logo @click="router.push({ name: 'home' });"></Logo>
+        <Logo @click="router.push({ name: 'home' })"></Logo>
       </template>
       <template #end>
-        <ButtonGroup v-if ="!isHiddenEnterItems">
-          <Button v-if="!authStore.isAuth" v-for="item in menuEnterItems" :key="item.label" :label="item.label" @click="item.command()" />
-          <Button v-else v-for="item in menuAuthItems" :key="item.label" :label="item.label" @click="item.command()" />
+        <ButtonGroup v-if="!isHiddenEnterItems">
+          <template v-if="!authStore.isAuth">
+            <Button
+              v-for="(item, index) in menuEnterItems"
+              :key="index"
+              :label="item.label"
+              @click="item.command()"
+            />
+          </template>
+          <template v-else>
+            <Button
+              v-for="(item, index) in menuAuthItems"
+              :key="index"
+              :label="item.label"
+              @click="item.command()"
+            />
+          </template>
         </ButtonGroup>
       </template>
     </Menubar>
@@ -19,96 +29,90 @@
 </template>
 
 <script setup>
-import { ButtonGroup, Button, Menubar } from 'primevue';
-import { computed, onMounted, ref } from 'vue';
+import { ButtonGroup, Button, Menubar } from "primevue";
+import { computed, onMounted, ref } from "vue";
 import Logo from "@/assets/logo.svg";
 import router from "@/router/index";
-import { useAuthStore } from '@/store/authStore';
+import { useAuthStore } from "@/store/authStore";
 
 const authStore = useAuthStore();
 
-onMounted(() => {
-});
+onMounted(() => {});
 
 const menuMainItems = ref([
   {
     label: "Главная",
     command: () => {
-      router.push({ name: 'home' });
-    }
+      router.push({ name: "home" });
+    },
   },
   {
     label: "Математика",
     command: () => {
-      router.push({ name: 'maths' });
-    }
+      router.push({ name: "maths" });
+    },
   },
   {
     label: "Физика",
     command: () => {
-      router.push({ name: 'physics' });
-    }
-  }
-])
+      router.push({ name: "physics" });
+    },
+  },
+]);
 
 const menuEnterItems = ref([
   {
     label: "Регистрация",
     command: () => {
-      router.push({ name: 'register' });
-    }
+      router.push({ name: "register" });
+    },
   },
   {
     label: "Войти",
     command: () => {
-      router.push({ name: 'login' });
-    }
-  }
-])
+      router.push({ name: "login" });
+    },
+  },
+]);
 
 const menuAuthItems = ref([
   {
     label: "Выйти",
     command: () => {
       authStore.logout();
-    }
-  }
-])
+    },
+  },
+]);
 
 const isHiddenEnterItems = ref(false);
 
 const screenWidth = ref(window.innerWidth);
-window.onresize = () => screenWidth.value = window.innerWidth; 
+window.onresize = () => (screenWidth.value = window.innerWidth);
 
 const menuItems = computed(() => {
   if (screenWidth.value < 961) {
-    isHiddenEnterItems.value = true
-    return [
-      ...menuMainItems.value,
-      ...menuEnterItems.value
-    ]
+    isHiddenEnterItems.value = true;
+    return [...menuMainItems.value, ...menuEnterItems.value];
   } else {
-    isHiddenEnterItems.value = false
-    return [
-      ...menuMainItems.value
-    ]
+    isHiddenEnterItems.value = false;
+    return [...menuMainItems.value];
   }
 });
 
 const passThrough = {
   rootlist: {
     style: {
-      'margin': '0 auto'
-    }
-  }
-}
+      margin: "0 auto",
+    },
+  },
+};
 </script>
 
 <style scoped>
 .menubar {
   height: 100px;
   padding: 23px 11.5%;
-  background-color: #1E1E1E;
+  background-color: #1e1e1e;
 }
 
 @media (max-width: 961px) {
@@ -129,7 +133,8 @@ const passThrough = {
   margin-left: 0;
 }
 
-:deep(.p-button-label), :deep(.p-menubar-item-label) {
+:deep(.p-button-label),
+:deep(.p-menubar-item-label) {
   font-weight: 500;
 }
 
@@ -138,7 +143,7 @@ const passThrough = {
 }
 
 :deep(.p-button-label) {
-  color: #1E1E1E;
+  color: #1e1e1e;
 }
 
 :deep(.p-button) {

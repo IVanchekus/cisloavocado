@@ -1,5 +1,5 @@
 <template>
-  <Navbar v-if="isShowNavbar"/>
+  <Navbar v-if="isShowNavbar" />
   <PageTemplate :style="{ height: pageTemplateHeight }">
     <router-view></router-view>
   </PageTemplate>
@@ -13,5 +13,7 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 const isShowNavbar = computed(() => route.meta.isShowNavbar ?? true);
-const pageTemplateHeight = computed(() => route.meta.pageTemplateHeight ?? '100%');
+const pageTemplateHeight = computed(
+  () => route.meta.pageTemplateHeight ?? "100%",
+);
 </script>

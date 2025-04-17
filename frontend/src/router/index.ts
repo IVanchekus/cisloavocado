@@ -3,6 +3,10 @@ import authMiddleware from "./middlewares/auth";
 
 const routes = [
   {
+    path: "/",
+    redirect: { name: "home" },
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("@/pages/Auth/Auth.vue"),

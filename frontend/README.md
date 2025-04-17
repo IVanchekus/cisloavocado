@@ -1,5 +1,28 @@
-# Vue 3 + TypeScript + Vite
+# 🚀 Проект на Vite + Vue 3 + TypeScript + Bun
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 📦 Установка зависимостей
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+Убедитесь, что у вас установлен [Bun](https://bun.sh/).  
+Установить зависимости:
+
+```bash
+bun install
+```
+
+# 🛠️ Конфигурация окружения
+Переименуйте .env.example в .env в корне проекта. Убедитесь, что правильно настроили переменные
+
+```
+VITE_BACKEND_URL=http://localhost/backend
+```
+
+# 🧪 Скрипты проекта
+| Команда             | Назначение                                                                 |
+|---------------------|----------------------------------------------------------------------------|
+| `bun run dev`       | Запускает проект в режиме разработки с горячей перезагрузкой (Vite).       |
+| `bun run build`     | Проверяет типы через `vue-tsc`, затем собирает проект через Vite.          |
+| `bun run preview`   | Запускает локальный сервер для предпросмотра собранного проекта.           |
+| `bun run watch`     | Собирает проект и следит за изменениями файлов (watch mode).               |
+| `bun run lint`      | Проверяет проект на ошибки линтинга с помощью ESLint (`.ts`, `.vue`).      |
+| `bun run lint:fix`  | То же, что `lint`, но автоматически исправляет найденные ошибки.           |
+| `bun run format`    | Форматирует весь проект с помощью Prettier.                                |

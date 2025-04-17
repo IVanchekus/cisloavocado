@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected $visible = [
+        'id',
+        'name',
+        'email',
+        'created_at',
+        'updated_at',
+    ];
 }

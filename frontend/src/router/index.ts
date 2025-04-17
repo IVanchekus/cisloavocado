@@ -1,38 +1,55 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/pages/Home/Home.vue";
-import Maths from "@/pages/Maths/Maths.vue";
-import Physics from "@/pages/Physics/Physics.vue";
-import Login from "@/pages/Auth/Login.vue";
+import authMiddleware from "./middlewares/auth";
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: () => import("@/pages/Home/Home.vue"),
   },
   {
     path: "/physics",
     name: "physics",
-    component: Physics 
+    component: () => import("@/pages/Physics/Physics.vue"),
   },
   {
     path: "/maths",
     name: "maths",
-    component: Maths
+    component: () => import("@/pages/Maths/Maths.vue"),
   },
   {
     path: "/login",
     name: "login",
-    component: Login,
+    component: () => import("@/pages/Auth/Auth.vue"),
     meta: {
-      isShowNavbar: false
-    }
-  }
-]
+      isShowNavbar: false,
+      pageTemplateHeight: "100vh",
+    },
+    props: {
+      type: "login",
+    },
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: () => import("@/pages/Auth/Auth.vue"),
+    meta: {
+      isShowNavbar: false,
+      pageTemplateHeight: "100vh",
+    },
+    props: {
+      type: "register",
+    },
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  authMiddleware(to, from, next);
+});
 
 export default router;

@@ -13,7 +13,7 @@ import useDefinePreset from "@/utils/useDefinePreset";
 
 import { axiosPlugin } from "@/plugins/axios";
 import { createPinia } from "pinia";
-import { useNavsStore } from "./store/navsStore";
+import useNavs from "./utils/useNavs";
 
 const pinia = createPinia();
 
@@ -32,16 +32,7 @@ const app = createApp(App);
   app.use(axiosPlugin);
   app.use(pinia);
 
-  const navsStore = useNavsStore();
-  await navsStore.getNavs();
-
-  navsStore.navs.forEach((nav) => {
-    router.addRoute({
-      path: `/${nav.name}`,
-      name: nav.name,
-      component: () => import(`./pages/${nav.component}/${nav.component}.vue`),
-    })
-  });
+  await useNavs();
   app.use(router);
   await router.isReady();
 

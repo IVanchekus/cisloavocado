@@ -10,11 +10,9 @@
 import Navbar from "@/components/Navbar/Navbar.vue";
 import PageTemplate from "@/components/PageTemplate/PageTemplate.vue";
 import FullScreenLoader from "@/components/FullScreenLoader/FullScreenLoader.vue";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useGlobalStore } from "./store/globalStore";
-import { useNavsStore } from "./store/navsStore";
-import router from "./router";
 
 const route = useRoute();
 const isShowNavbar = computed(() => route.meta.isShowNavbar ?? true);

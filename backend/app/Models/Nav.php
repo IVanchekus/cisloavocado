@@ -16,4 +16,9 @@ class Nav extends Model
     ];
 
     public $timestamps = false;
+
+    public function getLabelAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }

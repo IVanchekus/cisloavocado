@@ -39,32 +39,18 @@ import { useNavsStore } from "@/store/navsStore";
 const authStore = useAuthStore();
 const navsStore = useNavsStore();
 
-const menuMainItems = ref([
-  // {
-  //   label: "Главная",
-  //   command: () => {
-  //     router.push({ name: "home" });
-  //   },
-  // },
-  // {
-  //   label: "Математика",
-  //   command: () => {
-  //     router.push({ name: "maths" });
-  //   },
-  // },
-  // {
-  //   label: "Физика",
-  //   command: () => {
-  //     router.push({ name: "physics" });
-  //   },
-  // },
-  navsStore.navs.map((item) => ({
-    label: item.name,
-    command: () => {
-      router.push({ name: item.name });
-    }
-  }))
-]);
+onMounted(() => {
+  navsStore.navs.forEach((nav) => {
+    menuMainItems.value.push({
+      label: nav.label.ru,
+      command: () => {
+        router.push({ name: nav.name });
+      }
+    })
+  })
+})
+
+const menuMainItems = ref([]);
 
 const menuEnterItems = ref([
   {

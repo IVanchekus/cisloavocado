@@ -9,6 +9,6 @@ class NavController extends Controller
 {
     public function getNavs()
     {
-        return Nav::all();
+        return Nav::where('is_active', true)->get();
     }
 }

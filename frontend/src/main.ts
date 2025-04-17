@@ -13,20 +13,28 @@ import useDefinePreset from "@/utils/useDefinePreset";
 
 import { axiosPlugin } from "@/plugins/axios";
 import { createPinia } from "pinia";
+import useNavs from "./utils/useNavs";
 
 const pinia = createPinia();
 
-createApp(App)
-  .use(router)
-  .use(PrimeVue, {
+const app = createApp(App);
+  
+(async () => {
+  app.use(PrimeVue, {
     theme: {
       preset: useDefinePreset(),
       options: {
         darkModeSelector: true,
       },
     },
-  })
-  .use(ToastService)
-  .use(axiosPlugin)
-  .use(pinia)
-  .mount("#app");
+  });
+  app.use(ToastService);
+  app.use(axiosPlugin);
+  app.use(pinia);
+
+  await useNavs();
+  app.use(router);
+  await router.isReady();
+
+  app.mount("#app");
+})();

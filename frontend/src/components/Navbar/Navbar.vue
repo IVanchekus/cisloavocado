@@ -34,31 +34,23 @@ import { computed, onMounted, ref } from "vue";
 import Logo from "@/assets/logo.svg";
 import router from "@/router/index";
 import { useAuthStore } from "@/store/authStore";
+import { useNavsStore } from "@/store/navsStore";
 
 const authStore = useAuthStore();
+const navsStore = useNavsStore();
 
-onMounted(() => {});
+onMounted(() => {
+  navsStore.navs.forEach((nav) => {
+    menuMainItems.value.push({
+      label: nav.label.ru,
+      command: () => {
+        router.push({ name: nav.name });
+      }
+    })
+  })
+})
 
-const menuMainItems = ref([
-  {
-    label: "Главная",
-    command: () => {
-      router.push({ name: "home" });
-    },
-  },
-  {
-    label: "Математика",
-    command: () => {
-      router.push({ name: "maths" });
-    },
-  },
-  {
-    label: "Физика",
-    command: () => {
-      router.push({ name: "physics" });
-    },
-  },
-]);
+const menuMainItems = ref([]);
 
 const menuEnterItems = ref([
   {

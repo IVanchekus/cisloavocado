@@ -3,21 +3,6 @@ import authMiddleware from "./middlewares/auth";
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: () => import("@/pages/Home/Home.vue"),
-  },
-  {
-    path: "/physics",
-    name: "physics",
-    component: () => import("@/pages/Physics/Physics.vue"),
-  },
-  {
-    path: "/maths",
-    name: "maths",
-    component: () => import("@/pages/Maths/Maths.vue"),
-  },
-  {
     path: "/login",
     name: "login",
     component: () => import("@/pages/Auth/Auth.vue"),

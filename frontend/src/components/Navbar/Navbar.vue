@@ -34,30 +34,36 @@ import { computed, onMounted, ref } from "vue";
 import Logo from "@/assets/logo.svg";
 import router from "@/router/index";
 import { useAuthStore } from "@/store/authStore";
+import { useNavsStore } from "@/store/navsStore";
 
 const authStore = useAuthStore();
-
-onMounted(() => {});
+const navsStore = useNavsStore();
 
 const menuMainItems = ref([
-  {
-    label: "Главная",
+  // {
+  //   label: "Главная",
+  //   command: () => {
+  //     router.push({ name: "home" });
+  //   },
+  // },
+  // {
+  //   label: "Математика",
+  //   command: () => {
+  //     router.push({ name: "maths" });
+  //   },
+  // },
+  // {
+  //   label: "Физика",
+  //   command: () => {
+  //     router.push({ name: "physics" });
+  //   },
+  // },
+  navsStore.navs.map((item) => ({
+    label: item.name,
     command: () => {
-      router.push({ name: "home" });
-    },
-  },
-  {
-    label: "Математика",
-    command: () => {
-      router.push({ name: "maths" });
-    },
-  },
-  {
-    label: "Физика",
-    command: () => {
-      router.push({ name: "physics" });
-    },
-  },
+      router.push({ name: item.name });
+    }
+  }))
 ]);
 
 const menuEnterItems = ref([

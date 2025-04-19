@@ -15,4 +15,14 @@ class Subject extends Model
         'name',
         'description',
     ];
+
+    public function getNameAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function getDescriptionAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }

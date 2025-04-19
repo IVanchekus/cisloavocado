@@ -132,7 +132,7 @@ const onRegister = async (values: any) => {
   try {
     const { data } = await Repository.register(values);
     if (data.status === "success") {
-      authStore.login();
+      await authStore.login();
       router.push({ name: "home" });
     }
   } catch (error: any) {
@@ -149,7 +149,7 @@ const onLogin = async (values: any) => {
   try {
     const { data } = await Repository.login(values);
     if (data.status === "success") {
-      authStore.login();
+      await authStore.login();
       router.push({ name: "home" });
     }
   } catch (error: any) {

@@ -49,4 +49,14 @@ class Exercise extends Model
     {
         return $this->belongsTo(Subject::class);
     }
+
+    public function getQuestionAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function getSolutionAttribute($value)
+    {
+        return json_decode($value, true);
+    }    
 }

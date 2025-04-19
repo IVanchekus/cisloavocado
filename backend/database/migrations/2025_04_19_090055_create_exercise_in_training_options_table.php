@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_solved_exercises', function (Blueprint $table) {
+        Schema::create('exercise_in_training_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('exercise_id')->constrained('exercises')->onDelete('cascade');
-            $table->string('answer')->nullable();
-            $table->boolean('is_correct')->default(false);
+            $table->foreignId('training_option_id')->constrained('training_options')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_solved_exercises');
+        Schema::dropIfExists('exercise_in_training_options');
     }
 };

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InformaticsController;
 use App\Http\Controllers\NavController;
+use App\Http\Controllers\TrainingOptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,10 @@ Route::middleware('auth')->group(function() {
   Route::prefix('informatics')->group(function () {
     Route::get('exercises', [InformaticsController::class, 'getAllExercises']);
   });
-  
+
+  Route::prefix('training-option')->group(function () {
+    Route::get('getExercises/{hash}', [TrainingOptionController::class, 'getExercises']);
+    Route::post('saveAnswers', [TrainingOptionController::class, 'saveAnswers']);
+  });
 });
 

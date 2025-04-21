@@ -58,5 +58,10 @@ class Exercise extends Model
     public function getSolutionAttribute($value)
     {
         return json_decode($value, true);
-    }    
+    }
+
+    public function trainingOptions()
+    {
+        return $this->belongsToMany(TrainingOption::class, 'exercise_in_training_options');
+    }
 }

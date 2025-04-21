@@ -21,12 +21,22 @@
           </div>
         </div>
       </template>
-      <Form :validation-schema="schema" @submit="emit('save', $event)">
+      <Form :validation-schema="schema" @submit="emit('save', $event); onShowIsSave()">
         <div v-for="item in fields" :key="item.name">
           <Field :name="item.name" :type="item.type" v-slot="{ field, errors }">
             <div class="flex gap-2">
               <InputText :invalid="errors.length !== 0" v-bind="field" />
               <Button type="submit">Сохранить</Button>
+              <Transition name="fade-message">
+                <Message
+                  v-if="isSaved"
+                  :name="field.name"
+                  size="small"
+                  severity="success"
+                  variant="simple"
+                  >Сохранено</Message
+                >
+              </Transition>
             </div>
             <div style="height: 17px">
               <Transition name="fade-message">
@@ -53,12 +63,12 @@ import { IProps } from './Exercise.types';
 import { InputText, Button } from 'primevue';
 import { Field, Form } from "vee-validate";
 import * as yup from 'yup';
-import { emit } from 'process';
 
 const props = defineProps<IProps>();
 const emit = defineEmits(['save']);
 
 const isCheckSolution = ref(false);
+const isSaved = ref(false);
 
 const schema = yup.object({
   answer: yup.string().required()
@@ -71,6 +81,14 @@ const fields = [
     label: 'Ответ'
   }
 ]
+
+const onShowIsSave = async () => {
+  isSaved.value = true
+
+  setTimeout(() => {
+    isSaved.value = false
+  }, 3000);
+}
 
 </script>
 

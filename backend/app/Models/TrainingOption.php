@@ -20,4 +20,9 @@ class TrainingOption extends Model
         'with_solution' => 'boolean',
         'deadline' => 'datetime',
     ];
+
+    public function exercises()
+    {
+        return $this->belongsToMany(Exercise::class, 'exercise_in_training_options');
+    }
 }

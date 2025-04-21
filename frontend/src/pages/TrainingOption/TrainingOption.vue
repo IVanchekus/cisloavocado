@@ -21,11 +21,12 @@ import { onMounted, ref } from 'vue';
 import Exercise from '@/components/Exercise/Exercise.vue';
 import { useRoute } from 'vue-router';
 import { Button, Toast, useToast } from 'primevue';
+import { IExercise } from '@/components/Exercise/Exercise.types';
 
 const router = useRoute();
 const toast = useToast();
 
-const exercises = ref([]);
+const exercises = ref<Array<IExercise>>([]);
 const hash = router.params.hash as string;
 onMounted(async () => {
   await getAllExercises();

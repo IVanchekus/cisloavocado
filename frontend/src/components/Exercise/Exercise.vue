@@ -64,7 +64,7 @@ import { InputText, Button } from 'primevue';
 import { Field, Form } from "vee-validate";
 import * as yup from 'yup';
 
-const props = defineProps<IProps>();
+defineProps<IProps>();
 const emit = defineEmits(['save']);
 
 const isCheckSolution = ref(false);

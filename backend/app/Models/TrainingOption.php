@@ -21,6 +21,11 @@ class TrainingOption extends Model
         'deadline' => 'datetime',
     ];
 
+    public function getNameAttribute($value)
+    {
+        return json_decode($value);
+    }
+
     public function exercises()
     {
         return $this->belongsToMany(Exercise::class, 'exercise_in_training_options');

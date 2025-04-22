@@ -32,6 +32,7 @@ Route::get('navs', [NavController::class, 'getNavs']);
 Route::middleware('auth')->group(function() {
   Route::prefix('informatics')->group(function () {
     Route::get('exercises', [InformaticsController::class, 'getAllExercises']);
+    Route::get('getTrainingOptions', [InformaticsController::class, 'getTrainingOptions']);
   });
 
   Route::prefix('training-option')->group(function () {

@@ -28,7 +28,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ButtonGroup, Button, Menubar } from "primevue";
 import { computed, onMounted, ref } from "vue";
 import Logo from "@/assets/logo.svg";
@@ -83,13 +83,20 @@ window.onresize = () => (screenWidth.value = window.innerWidth);
 
 const menuItems = computed(() => {
   if (screenWidth.value < 961) {
-    isHiddenEnterItems.value = true;
+    onUpdateIsHiddenEnterItems(true);
+    if (authStore.isAuth) {
+      return [...menuMainItems.value, ...menuAuthItems.value];
+    }
     return [...menuMainItems.value, ...menuEnterItems.value];
   } else {
-    isHiddenEnterItems.value = false;
+    onUpdateIsHiddenEnterItems(false);
     return [...menuMainItems.value];
   }
 });
+
+const onUpdateIsHiddenEnterItems = (value: boolean) => {
+  isHiddenEnterItems.value = value
+}
 
 const passThrough = {
   rootlist: {

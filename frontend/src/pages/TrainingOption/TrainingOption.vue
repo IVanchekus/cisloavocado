@@ -67,7 +67,7 @@ const saveExerciseAnswer = (data: {answer: string}, id: number) => {
   }
 }
 
-onBeforeRouteLeave((to, from, next) => {
+onBeforeRouteLeave((_to, _from, next) => {
   if (solvedExercises.value.length > 0 && !isSolved.value) {
     confirm.require({
       message: 'Вы уверены что хотите уйти? Ваши изменения не будут сохранены.',

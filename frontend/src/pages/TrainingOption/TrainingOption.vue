@@ -110,6 +110,12 @@ const saveAnswers = async () => {
         try{
           await TrainingOptionRepository.saveAnswers(solvedExercises.value, hash);
           isSolved.value = true;
+          toast.add({
+            detail: "Ответы сохранены",
+            severity: "success",
+            life: 3000,
+            summary: "Success",
+          });
         } catch {
           toast.add({
             detail: "Something wrong",

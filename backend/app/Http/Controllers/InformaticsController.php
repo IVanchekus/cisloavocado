@@ -22,7 +22,8 @@ class InformaticsController extends Controller
     public function getTrainingOptions() {
         $trainingOptions = TrainingOption::select(['id', 'hash', 'name'])
             ->where('is_public', true)
-            ->where('is_approved', true);
+            ->where('is_approved', true)
+            ->whereHas('exercises');
             
         return response()->json($trainingOptions->get());
     }

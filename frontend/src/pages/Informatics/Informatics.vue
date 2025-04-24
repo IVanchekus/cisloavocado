@@ -1,7 +1,7 @@
 <template>
   <div>
     <Card>
-      <template #title>Список вариантов</template>
+      <template #title>Список доступных вариантов</template>
       <template #content>
         <div>
           <Button

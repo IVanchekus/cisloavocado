@@ -24,7 +24,7 @@
       <Form :validation-schema="schema" @submit="emit('save', $event); onShowIsSave()">
         <div v-for="item in fields" :key="item.name">
           <Field :name="item.name" :type="item.type" v-slot="{ field, errors }">
-            <div class="flex gap-2">
+            <div class="flex gap-2 align-items-center">
               <InputText :invalid="errors.length !== 0" v-bind="field" />
               <Button type="submit">Сохранить</Button>
               <Transition name="fade-message">
@@ -112,6 +112,6 @@ const onShowIsSave = async () => {
 .fade-message-enter-from,
 .fade-message-leave-to {
   opacity: 0;
-  transform: translateY(-4px);
+  transform: translateX(-4px);
 }
 </style>

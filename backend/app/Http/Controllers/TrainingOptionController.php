@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TrainingOption;
 use App\Models\UserSolvedExercise;
+use App\Models\UserSolvedTrainingOption;
 use Illuminate\Http\Request;
 
 class TrainingOptionController extends Controller
@@ -20,14 +21,22 @@ class TrainingOptionController extends Controller
             return response()->json(['message' => 'No exercises found'], 404);
         }
 
-        if (!$trainingOption->with_solution) {
-            $exercises->each(function ($exercise) {
-                $exercise->solution = null;
-                $exercise->answer = null;
-            });
+        $userSolvedTrainingOption = UserSolvedTrainingOption::firstOrNew([
+            'user_id' => auth()->id(),
+            'training_option_id' => $trainingOption->id,
+        ]);
+        
+        if (!$userSolvedTrainingOption->started_at) {
+            $userSolvedTrainingOption->started_at = now();
+            $userSolvedTrainingOption->save();
         }
 
-        return response()->json($exercises);
+        return response()->json(
+            [
+                "trainingOption" => $trainingOption,
+                "exercises" => $exercises,
+            ]
+        );
     }
 
     public function saveAnswers(Request $request)
@@ -57,6 +66,15 @@ class TrainingOptionController extends Controller
                 ]
             );
         }
+
+        $userSolvedTrainingOption = UserSolvedTrainingOption::where([
+            'user_id' => auth()->id(),
+            'training_option_id' => $trainingOption->id,
+        ])->first();
+
+        $userSolvedTrainingOption->finished_at = now();
+        $userSolvedTrainingOption->is_solved = true;
+        $userSolvedTrainingOption->save();
 
         return response()->json(['message' => 'Answers saved successfully']);
     }

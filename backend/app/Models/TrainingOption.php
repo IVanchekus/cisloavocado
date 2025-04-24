@@ -26,8 +26,17 @@ class TrainingOption extends Model
         return json_decode($value);
     }
 
-    public function exercises()
+    public function getDescriptionAttribute($value)
     {
-        return $this->belongsToMany(Exercise::class, 'exercise_in_training_options');
+        return json_decode($value);
+    }
+
+    public function exercises($isWithSolution = false)
+    {
+        if ($isWithSolution) {
+            return $this->belongsToMany(Exercise::class, 'exercise_in_training_options');    
+        }
+        return $this->belongsToMany(Exercise::class, 'exercise_in_training_options')
+            ->select(["exercises.id", "exercises.question", "img_url"]);
     }
 }

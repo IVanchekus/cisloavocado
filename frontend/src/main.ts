@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import PrimeVue from "primevue/config";
 import { ToastService } from "primevue";
+import { ConfirmationService } from "primevue";
 
 import "./assets/reset.css";
 import "primeicons/primeicons.css"; // Иконки
@@ -29,6 +30,7 @@ const app = createApp(App);
     },
   });
   app.use(ToastService);
+  app.use(ConfirmationService);
   app.use(axiosPlugin);
   app.use(pinia);
 

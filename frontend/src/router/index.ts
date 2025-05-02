@@ -41,6 +41,11 @@ const routes = [
         component: () => import("@/pages/TrainingOption/TrainingOption.vue")
       }
     ]
+  },
+  {
+    path: "/profile/:id",
+    name: "profile",
+    component: () => import("@/pages/Profile/Profile.vue")
   }
 ];
 

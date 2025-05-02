@@ -69,6 +69,12 @@ const menuEnterItems = ref([
 
 const menuAuthItems = ref([
   {
+    label: "Профиль",
+    command: () => {
+      router.push({ name: "profile", params: { id: authStore.user.id } });
+    },
+  },
+  {
     label: "Выйти",
     command: () => {
       authStore.logout();

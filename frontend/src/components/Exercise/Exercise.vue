@@ -7,6 +7,9 @@
       <div style="text-align: justify;">
         {{ exercise.question.ru }}
       </div>
+      <div v-if="exercise.img_url">
+        <Image :src="exercise.img_url" preview width="500" />
+      </div>
       <template v-if="exercise.solution">
         <div class="flex flex-column row-gap-1 align-items-start">
           <Button
@@ -60,7 +63,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { IProps } from './Exercise.types';
-import { InputText, Button } from 'primevue';
+import { InputText, Button, Image } from 'primevue';
 import { Field, Form } from "vee-validate";
 import * as yup from 'yup';
 

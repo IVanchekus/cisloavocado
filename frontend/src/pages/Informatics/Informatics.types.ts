@@ -5,4 +5,5 @@ export type ITrainingOption = {
     en: string;
   };
   hash: string;
+  is_solved: boolean;
 }

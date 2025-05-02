@@ -48,7 +48,7 @@
             </Field>
           </div>
           <div class="flex flex-column mt-1 mb-2 row-gap-1">
-            <Button type="submit" color="primary">{{
+            <Button type="submit" color="primary" :loading="isLoading">{{
               type === "login" ? "Войти" : "Зарегистрироваться"
             }}</Button>
             <Button
@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import Repository from "@/api/Auth/AuthRepository";
 import { Field, Form } from "vee-validate";
@@ -85,6 +85,7 @@ import { useAuthStore } from "@/store/authStore";
 const toast = useToast();
 const router = useRouter();
 const authStore = useAuthStore();
+const isLoading = ref(false);
 
 const props = defineProps<IProps>();
 
@@ -130,7 +131,9 @@ const fields = computed(() => {
 
 const onRegister = async (values: any) => {
   try {
+    isLoading.value = true;
     const { data } = await Repository.register(values);
+    isLoading.value = false;
     if (data.status === "success") {
       await authStore.login();
       router.push({ name: "home" });
@@ -147,7 +150,9 @@ const onRegister = async (values: any) => {
 
 const onLogin = async (values: any) => {
   try {
+    isLoading.value = true;
     const { data } = await Repository.login(values);
+    isLoading.value = false;
     if (data.status === "success") {
       await authStore.login();
       router.push({ name: "home" });

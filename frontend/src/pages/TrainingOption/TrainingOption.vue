@@ -30,8 +30,9 @@ import Exercise from '@/components/Exercise/Exercise.vue';
 import { onBeforeRouteLeave, useRoute } from 'vue-router';
 import { Button, Toast, useToast, Divider, useConfirm, ConfirmDialog, ProgressSpinner } from 'primevue';
 import { IExercise } from '@/components/Exercise/Exercise.types';
+import router from '@/router';
 
-const router = useRoute();
+const route = useRoute();
 const toast = useToast();
 const confirm = useConfirm();
 
@@ -40,7 +41,7 @@ const isSolved = ref(false);
 
 const exercises = ref<Array<IExercise>>([]);
 const trainingOption = ref();
-const hash = router.params.hash as string;
+const hash = route.params.hash as string;
 onMounted(async () => {
   await initTrainingOption();
 })
@@ -116,6 +117,7 @@ const saveAnswers = async () => {
             life: 3000,
             summary: "Success",
           });
+          router.push({ name: "informatics" });
         } catch {
           toast.add({
             detail: "Something wrong",

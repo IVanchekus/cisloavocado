@@ -21,6 +21,10 @@ class TrainingOption extends Model
         'deadline' => 'datetime',
     ];
 
+    protected $appends = [
+        'is_solved',
+    ];
+
     public function getNameAttribute($value)
     {
         return json_decode($value);
@@ -38,5 +42,13 @@ class TrainingOption extends Model
         }
         return $this->belongsToMany(Exercise::class, 'exercise_in_training_options')
             ->select(["exercises.id", "exercises.question", "img_url"]);
+    }
+
+    public function getIsSolvedAttribute()
+    {
+        return UserSolvedTrainingOption::where([
+            'user_id' => auth()->user()->id,
+            'training_option_id' => $this->id,
+        ])->exists();
     }
 }

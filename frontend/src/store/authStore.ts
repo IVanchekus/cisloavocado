@@ -1,4 +1,5 @@
 import AuthRepository from "@/api/Auth/AuthRepository";
+import router from "@/router";
 import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", {
@@ -24,6 +25,7 @@ export const useAuthStore = defineStore("auth", {
         await AuthRepository.logout();
         this.isAuth = false;
         this.user = {};
+        router.push({ name: "login" });
       } catch (error) {
         console.log(error);
       }

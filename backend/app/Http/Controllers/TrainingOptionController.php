@@ -11,7 +11,11 @@ class TrainingOptionController extends Controller
 {
     public function getExercises($hash)
     {
-        $trainingOption = TrainingOption::where('hash', $hash)->first();
+        $trainingOption = TrainingOption::where([
+            'hash' => $hash,
+            'is_public' => true,
+            'is_approved' => true,
+        ])->first();
         if (!$trainingOption) {
             return response()->json(['message' => 'Training option not found'], 404);
         }

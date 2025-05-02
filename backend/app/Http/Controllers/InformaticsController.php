@@ -10,9 +10,11 @@ class InformaticsController extends Controller
 {
     public function getAllExercises() {
 
-        $exercises = Exercise::where('subject_id', 1)
-            ->where('is_public', true)
-            ->where('is_approved', true)
+        $exercises = Exercise::where([
+                "subject_id" => 1,
+                "is_public" => true,
+                "is_approved" => true,
+            ])
             ->with(['user', 'category', 'level'])
             ->orderBy('created_at', 'desc')
             ->get();
@@ -21,8 +23,11 @@ class InformaticsController extends Controller
 
     public function getTrainingOptions() {
         $trainingOptions = TrainingOption::select(['id', 'hash', 'name'])
-            ->where('is_public', true)
-            ->where('is_approved', true)
+            ->where([
+                "subject_id" => 1,
+                "is_public" => true,
+                "is_approved" => true,
+            ])
             ->whereHas('exercises');
             
         return response()->json($trainingOptions->get());

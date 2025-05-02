@@ -18,9 +18,10 @@ export default async function authMiddleware(
     globalStore.changeLoading(false);
   }
 
-  if (["login", "register"].includes(to.name as string) && authStore.isAuth) {
-    next({ name: "home" });
-  } else {
-    next();
-  }
+  const isAuth = authStore.isAuth;
+  const toLoginRegister = ["login", "register"].includes(to.name as string);
+
+  if (!isAuth && !toLoginRegister) next({ name: "login" });
+  if (isAuth && toLoginRegister) next({ name: "home" });
+  next();
 }

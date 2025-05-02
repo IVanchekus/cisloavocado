@@ -30,6 +30,18 @@ const routes = [
       type: "register",
     },
   },
+  {
+    path: "/training-option",
+    name: "training-option",
+    redirect: { name: "home" },
+    children: [
+      {
+        path: ':hash',
+        name: "training-option-detail",
+        component: () => import("@/pages/TrainingOption/TrainingOption.vue")
+      }
+    ]
+  }
 ];
 
 const router = createRouter({

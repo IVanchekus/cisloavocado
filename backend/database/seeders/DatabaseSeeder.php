@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             NavSeeder::class,
+            CategoryExerciseSeeder::class,
+            LevelExerciseSeeder::class,
+            SubjectSeeder::class,
         ]);
     }
 }

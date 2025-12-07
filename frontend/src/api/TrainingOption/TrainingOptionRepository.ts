@@ -10,5 +10,11 @@ export default {
   },
   saveAnswers: async (answers: any, hash: string) => {
     return await Repository.post(`${resource}/saveAnswers`, { answers, hash } );
+  },
+  createExercise: async (data: any) => {
+    return await Repository.post(`${resource}/exercise/create`, {data});
+  },
+  updateExercise: async (id: any, data: any) => {
+    return await Repository.put(`${resource}/exercise/update/${id}`, {data});
   }
 };

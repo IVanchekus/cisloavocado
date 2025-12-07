@@ -34,11 +34,16 @@ Route::middleware('auth')->group(function() {
   Route::prefix('informatics')->group(function () {
     Route::get('exercises', [InformaticsController::class, 'getAllExercises']);
     Route::get('getTrainingOptions', [InformaticsController::class, 'getTrainingOptions']);
+    Route::get('getTrainingOptionsByUser', [InformaticsController::class, 'getTrainingOptionsByUser']);
   });
 
   Route::prefix('training-option')->group(function () {
     Route::get('getExercises/{hash}', [TrainingOptionController::class, 'getExercises']);
     Route::post('saveAnswers', [TrainingOptionController::class, 'saveAnswers']);
+    Route::prefix('exercise')->group(function () {
+      Route::post('create', [TrainingOptionController::class, 'createExercise']);
+      Route::post('update', [TrainingOptionController::class, 'updateExercise']);
+    });
   });
 
   Route::prefix('profile')->group(function() {

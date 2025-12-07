@@ -82,4 +82,6 @@ class TrainingOptionController extends Controller
 
         return response()->json(['message' => 'Answers saved successfully']);
     }
+
+    public function create()
 }

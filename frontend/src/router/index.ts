@@ -46,6 +46,17 @@ const routes = [
     path: "/profile/:id",
     name: "profile",
     component: () => import("@/pages/Profile/Profile.vue")
+  },
+  {
+    path: "/exercise",
+    name: "exercise",
+    children: [
+      {
+        path: "create",
+        name: "exercise-create",
+        component: () => import('@/pages/TrainingOption/ExerciseCreate.vue'),
+      }
+    ]
   }
 ];
 

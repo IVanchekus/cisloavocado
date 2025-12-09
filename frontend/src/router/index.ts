@@ -55,7 +55,12 @@ const routes = [
         path: "create",
         name: "exercise-create",
         component: () => import('@/pages/TrainingOption/ExerciseCreate.vue'),
-      }
+      },
+      {
+        path: "edit/:id",
+        name: "exercise-edit",
+        component: () => import('@/pages/TrainingOption/ExerciseEdit.vue'),
+      },
     ]
   }
 ];

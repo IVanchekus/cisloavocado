@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exercise;
 use App\Models\TrainingOption;
 use App\Models\UserSolvedExercise;
 use App\Models\UserSolvedTrainingOption;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainingOptionController extends Controller
 {
@@ -83,5 +85,68 @@ class TrainingOptionController extends Controller
         return response()->json(['message' => 'Answers saved successfully']);
     }
 
-    public function create()
+    public function createExercise(Request $request)
+    {
+        $validated = $request->validate([
+            'data.question' => 'required|string',
+            'data.solution' => 'required|string',
+            'data.answer' => 'required|string',
+        ]);
+
+        $data = $validated['data'];
+
+        $exercise = Exercise::create([
+            'question' => json_encode([
+                'ru' => $data['question'],
+                'en' => $data['question'],
+            ]),
+            'answer' => $data['answer'],
+            'solution' => json_encode([
+                'ru' => $data['solution'],
+                'en' => $data['solution'],
+            ]),
+            'user_id' => Auth::id(),
+            'subject_id' => 1,
+        ]);
+
+        return response()->json($exercise, 201);
+    }
+
+    public function updateExercise(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'data.question' => 'required|string',
+            'data.solution' => 'required|string',
+            'data.answer' => 'required|string',
+        ]);
+
+        $data = $validated['data'];
+
+        $exercise = Exercise::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $exercise->question = json_encode([
+            'ru' => $data['question'],
+            'en' => $data['question'],
+        ]);
+        $exercise->solution = json_encode([
+            'ru' => $data['solution'],
+            'en' => $data['solution'],
+        ]);
+        $exercise->answer = $data['answer'];
+
+        $exercise->save();
+
+        return response()->json($exercise);
+    }
+
+    public function getExercise($id)
+    {
+        $exercise = Exercise::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        return response()->json($exercise);
+    }
 }

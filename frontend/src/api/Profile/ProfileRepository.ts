@@ -8,4 +8,7 @@ export default {
   getUserData: async (id: string) => {
     return await Repository.get(`${resource}/user-data/${id}`);
   },
+  getMyExercises: async () => {
+    return await Repository.get(`${resource}/exercises`);
+  },
 }

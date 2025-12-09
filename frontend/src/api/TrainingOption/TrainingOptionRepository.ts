@@ -11,6 +11,9 @@ export default {
   saveAnswers: async (answers: any, hash: string) => {
     return await Repository.post(`${resource}/saveAnswers`, { answers, hash } );
   },
+  getExercise: async (id: number | string) => {
+    return await Repository.get(`${resource}/exercise/${id}`);
+  },
   createExercise: async (data: any) => {
     return await Repository.post(`${resource}/exercise/create`, {data});
   },

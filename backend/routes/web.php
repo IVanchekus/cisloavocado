@@ -36,18 +36,20 @@ Route::middleware('auth')->group(function() {
     Route::get('getTrainingOptions', [InformaticsController::class, 'getTrainingOptions']);
     Route::get('getTrainingOptionsByUser', [InformaticsController::class, 'getTrainingOptionsByUser']);
   });
-
+ 
   Route::prefix('training-option')->group(function () {
     Route::get('getExercises/{hash}', [TrainingOptionController::class, 'getExercises']);
     Route::post('saveAnswers', [TrainingOptionController::class, 'saveAnswers']);
+    Route::get('exercise/{id}', [TrainingOptionController::class, 'getExercise']);
     Route::prefix('exercise')->group(function () {
       Route::post('create', [TrainingOptionController::class, 'createExercise']);
-      Route::post('update', [TrainingOptionController::class, 'updateExercise']);
+      Route::put('update/{id}', [TrainingOptionController::class, 'updateExercise']);
     });
   });
 
   Route::prefix('profile')->group(function() {
     Route::get('user-data/{id}', [ProfileController::class, 'getUserData']);
+    Route::get('exercises', [ProfileController::class, 'getMyExercises']);
   });
 });
 

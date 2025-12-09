@@ -10,15 +10,21 @@ class TrainingOption extends Model
     use HasFactory;
 
     protected $fillable = [
+        'hash',
         'name',
         'description',
         'with_solution',
         'deadline',
         'user_id',
+        'subject_id',
+        'is_public',
+        'is_approved',
     ];
     protected $casts = [
         'with_solution' => 'boolean',
         'deadline' => 'datetime',
+        'is_public' => 'boolean',
+        'is_approved' => 'boolean',
     ];
 
     protected $appends = [

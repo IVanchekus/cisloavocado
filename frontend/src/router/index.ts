@@ -36,6 +36,16 @@ const routes = [
     redirect: { name: "home" },
     children: [
       {
+        path: "create",
+        name: "training-option-create",
+        component: () => import("@/pages/TrainingOption/TrainingOptionCreate.vue")
+      },
+      {
+        path: "edit/:id",
+        name: "training-option-edit",
+        component: () => import("@/pages/TrainingOption/TrainingOptionEdit.vue")
+      },
+      {
         path: ':hash',
         name: "training-option-detail",
         component: () => import("@/pages/TrainingOption/TrainingOption.vue")

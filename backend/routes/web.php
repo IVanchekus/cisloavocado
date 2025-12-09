@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function() {
     Route::get('getExercises/{hash}', [TrainingOptionController::class, 'getExercises']);
     Route::post('saveAnswers', [TrainingOptionController::class, 'saveAnswers']);
     Route::get('exercise/{id}', [TrainingOptionController::class, 'getExercise']);
+    Route::get('{id}', [TrainingOptionController::class, 'getTrainingOption']);
+    Route::post('create', [TrainingOptionController::class, 'createTrainingOption']);
+    Route::put('update/{id}', [TrainingOptionController::class, 'updateTrainingOption']);
     Route::prefix('exercise')->group(function () {
       Route::post('create', [TrainingOptionController::class, 'createExercise']);
       Route::put('update/{id}', [TrainingOptionController::class, 'updateExercise']);

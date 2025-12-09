@@ -15,27 +15,15 @@
         </div>
       </div>
     </div>
-    <div>
+    <div v-if="isMyProfile" class="flex flex-column row-gap-4">
       <div class="flex flex-column row-gap-2">
-        <div>
+        <div class="font-semibold">Мои задания</div>
+        <div class="mb-2">
           <Button
             :label="'Создать задание'"
             @click="onCreateExercise"
           />
         </div>
-        <div>
-          <Button
-            v-for="(item, index) in trainingOptions"
-            :key="item.id"
-            variant="text"
-            @click="onClickTrainingOption(item)"
-            :label="`Вариант ${index + 1}`"
-            :severity="item.is_solved ? 'success' : 'primary'"
-          />
-        </div>
-      </div>
-      <div v-if="isMyProfile" class="mt-4 flex flex-column row-gap-2">
-        <div class="font-semibold">Мои задания</div>
         <div v-if="exercises && exercises.length">
           <div
             v-for="exercise in exercises"
@@ -54,6 +42,43 @@
         </div>
         <div v-else>
           Задания пока не созданы.
+        </div>
+      </div>
+
+      <div class="flex flex-column row-gap-2">
+        <div class="font-semibold">Мои варианты</div>
+        <div class="mb-2">
+          <Button
+            :label="'Создать вариант'"
+            @click="onCreateTrainingOption"
+          />
+        </div>
+        <div v-if="trainingOptions && trainingOptions.length">
+          <div
+            v-for="item in trainingOptions"
+            :key="item.id"
+            class="flex align-items-center justify-content-between gap-2 mb-2"
+          >
+            <div class="flex-1" style="max-width: 600px; text-align: justify;">
+              {{ item.name?.ru }}
+            </div>
+            <div class="flex gap-2">
+              <Button
+                size="small"
+                :label="'Открыть'"
+                @click="onClickTrainingOption(item)"
+              />
+              <Button
+                size="small"
+                :label="'Редактировать'"
+                severity="secondary"
+                @click="onEditTrainingOption(item)"
+              />
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          Варианты пока не созданы.
         </div>
       </div>
     </div>
@@ -137,6 +162,19 @@ const onEditExercise = (exercise: IExercise) => {
     name: 'exercise-edit',
     params: { id: exercise.id }
   });
+}
+
+const onCreateTrainingOption = () => {
+  router.push({
+    name: 'training-option-create'
+  })
+}
+
+const onEditTrainingOption = (item: ITrainingOption) => {
+  router.push({
+    name: 'training-option-edit',
+    params: { id: item.id }
+  })
 }
 </script>
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\InformaticsController;
 use App\Http\Controllers\NavController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingOptionController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,8 @@ Route::prefix('auth')->group(function () {
 Route::get('navs', [NavController::class, 'getNavs']);
 
 Route::middleware('auth')->group(function() {
+  Route::get('users', [UsersController::class, 'index']);
+
   Route::prefix('informatics')->group(function () {
     Route::get('exercises', [InformaticsController::class, 'getAllExercises']);
     Route::get('getTrainingOptions', [InformaticsController::class, 'getTrainingOptions']);

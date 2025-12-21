@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function() {
 
     Route::middleware('permission:roles.manage')->group(function () {
       Route::get('roles', [RolesController::class, 'index']);
+      Route::post('roles', [RolesController::class, 'store']);
       Route::put('roles/{id}/permissions', [RolesController::class, 'syncPermissions']);
     });
   });

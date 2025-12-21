@@ -28,7 +28,8 @@ return new class extends Migration
             return;
         }
 
-        DB::table('role_user')->insert([
+        // Выдаём роль admin, но не падаем при повторной миграции/сидинге.
+        DB::table('role_user')->insertOrIgnore([
             'user_id' => $adminUserId,
             'role_id' => $adminRoleId,
         ]);

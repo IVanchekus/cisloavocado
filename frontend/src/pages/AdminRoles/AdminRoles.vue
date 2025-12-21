@@ -1,6 +1,46 @@
 <template>
   <div class="flex flex-column row-gap-3">
-    <div class="admin-roles__title">Редактирование ролей</div>
+    <div class="admin-roles__title">Роли</div>
+
+    <Card>
+      <template #title>Создать роль</template>
+      <template #content>
+        <div class="flex flex-column row-gap-2" style="max-width: 720px;">
+          <div class="flex flex-column row-gap-1">
+            <div class="text-sm">Slug (уникальный)</div>
+            <InputText v-model="createForm.slug" class="w-full" placeholder="например: moderator" />
+          </div>
+
+          <div class="flex flex-column row-gap-1">
+            <div class="text-sm">Название (RU)</div>
+            <InputText v-model="createForm.title_ru" class="w-full" placeholder="например: Модератор" />
+          </div>
+
+          <div class="flex flex-column row-gap-1">
+            <div class="text-sm">Название (EN, опционально)</div>
+            <InputText v-model="createForm.title_en" class="w-full" placeholder="например: Moderator" />
+          </div>
+
+          <div class="flex flex-column row-gap-1">
+            <div class="text-sm">Права (опционально)</div>
+            <MultiSelect
+              v-model="createForm.permission_ids"
+              :options="permissionOptions"
+              optionLabel="label"
+              optionValue="id"
+              display="chip"
+              placeholder="Выберите права"
+              class="w-full"
+            />
+          </div>
+
+          <div class="flex gap-2 mt-2">
+            <Button label="Создать" :loading="isCreating" @click="onCreateRole" />
+            <Button label="Очистить" severity="secondary" @click="resetCreateForm" />
+          </div>
+        </div>
+      </template>
+    </Card>
 
     <Card>
       <template #title>Роль → разрешения</template>
@@ -49,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { Card, Button, Dropdown, MultiSelect } from "primevue";
+import { Card, Button, Dropdown, MultiSelect, InputText } from "primevue";
 import { computed, onMounted, ref, watch } from "vue";
 import { useGlobalStore } from "@/store/globalStore";
 import DictionariesRepository from "@/api/Dictionaries/DictionariesRepository";
@@ -76,6 +116,14 @@ const selectedRoleId = ref<number | null>(null);
 const selectedPermissionIds = ref<number[]>([]);
 const error = ref<string | null>(null);
 const isSaving = ref(false);
+const isCreating = ref(false);
+
+const createForm = ref({
+  slug: "",
+  title_ru: "",
+  title_en: "",
+  permission_ids: [] as number[],
+});
 
 const roleOptions = computed(() => {
   return roles.value.map((r) => ({
@@ -119,6 +167,39 @@ const loadAll = async () => {
     console.log(e);
   } finally {
     globalStore.changeLoading(false);
+  }
+};
+
+const resetCreateForm = () => {
+  createForm.value.slug = "";
+  createForm.value.title_ru = "";
+  createForm.value.title_en = "";
+  createForm.value.permission_ids = [];
+};
+
+const onCreateRole = async () => {
+  error.value = null;
+  if (!createForm.value.slug.trim() || !createForm.value.title_ru.trim()) {
+    error.value = "Заполните slug и название (RU).";
+    return;
+  }
+
+  isCreating.value = true;
+  try {
+    const { data } = await RolesRepository.create({
+      slug: createForm.value.slug.trim(),
+      title_ru: createForm.value.title_ru.trim(),
+      title_en: createForm.value.title_en?.trim() || null,
+      permission_ids: createForm.value.permission_ids,
+    });
+    await loadAll();
+    selectedRoleId.value = (data as any).id;
+    resetCreateForm();
+  } catch (e: any) {
+    error.value = "Не удалось создать роль.";
+    console.log(e);
+  } finally {
+    isCreating.value = false;
   }
 };
 

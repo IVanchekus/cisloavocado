@@ -8,15 +8,15 @@
         <div class="flex flex-column row-gap-2" style="max-width: 520px;">
           <div class="flex flex-column row-gap-1">
             <div class="text-sm">Имя</div>
-            <InputText v-model="createForm.name" />
+            <InputText v-model="createForm.name" class="w-full" />
           </div>
           <div class="flex flex-column row-gap-1">
             <div class="text-sm">Email</div>
-            <InputText v-model="createForm.email" />
+            <InputText v-model="createForm.email" class="w-full" />
           </div>
           <div class="flex flex-column row-gap-1">
             <div class="text-sm">Пароль</div>
-            <Password v-model="createForm.password" :feedback="false" toggleMask />
+            <Password v-model="createForm.password" :feedback="false" toggleMask class="w-full" inputClass="w-full" />
           </div>
           <div class="flex flex-column row-gap-1">
             <div class="text-sm">Роли</div>
@@ -27,6 +27,7 @@
               optionValue="id"
               display="chip"
               placeholder="Выберите роли"
+              class="w-full"
             />
           </div>
 
@@ -261,6 +262,12 @@ const onSaveUserRoles = async (u: TUserRow) => {
   max-height: 70vh;
   border: 1px solid var(--p-surface-200);
   border-radius: 10px;
+}
+
+/* PrimeVue Password по умолчанию может не растягивать внутренний input */
+:deep(.p-password),
+:deep(.p-password-input) {
+  width: 100%;
 }
 </style>
 

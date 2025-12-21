@@ -5,7 +5,7 @@
         <Logo @click="router.push({ name: 'home' })"></Logo>
       </template>
       <template #end>
-        <ButtonGroup v-if="!isHiddenEnterItems">
+        <ButtonGroup>
           <template v-if="!authStore.isAuth">
             <Button
               v-for="(item, index) in menuEnterItems"
@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { ButtonGroup, Button, Menubar } from "primevue";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import Logo from "@/assets/logo.svg";
 import router from "@/router/index";
 import { useAuthStore } from "@/store/authStore";
@@ -38,19 +38,6 @@ import { useNavsStore } from "@/store/navsStore";
 
 const authStore = useAuthStore();
 const navsStore = useNavsStore();
-
-onMounted(() => {
-  navsStore.navs.forEach((nav) => {
-    menuMainItems.value.push({
-      label: nav.label.ru,
-      command: () => {
-        router.push({ name: nav.name });
-      }
-    })
-  })
-})
-
-const menuMainItems = ref([]);
 
 const menuEnterItems = ref([
   {
@@ -82,27 +69,51 @@ const menuAuthItems = ref([
   },
 ]);
 
-const isHiddenEnterItems = ref(false);
+const menuMainItems = computed(() => {
+  const all = (navsStore.navs as any[]) ?? [];
+  const byId = new Map<number, any>();
+  all.forEach((n) => byId.set(n.id, n));
 
-const screenWidth = ref(window.innerWidth);
-window.onresize = () => (screenWidth.value = window.innerWidth);
+  const childrenByParent = new Map<number, any[]>();
+  all.forEach((n) => {
+    if (!n.parent_id) return;
+    const pid = Number(n.parent_id);
+    const arr = childrenByParent.get(pid) ?? [];
+    arr.push(n);
+    childrenByParent.set(pid, arr);
+  });
 
-const menuItems = computed(() => {
-  if (screenWidth.value < 961) {
-    onUpdateIsHiddenEnterItems(true);
-    if (authStore.isAuth) {
-      return [...menuMainItems.value, ...menuAuthItems.value];
+  const roots = all.filter((n) => !n.parent_id);
+
+  const buildItem = (nav: any): any => {
+    const kids = childrenByParent.get(Number(nav.id)) ?? [];
+    const label = nav.label?.ru ?? nav.label?.en ?? nav.name;
+
+    if (kids.length) {
+      return {
+        label,
+        items: kids.map((c) => buildItem(c)),
+      };
     }
-    return [...menuMainItems.value, ...menuEnterItems.value];
-  } else {
-    onUpdateIsHiddenEnterItems(false);
-    return [...menuMainItems.value];
-  }
+
+    if (!nav.component) {
+      // родитель без компонента и без детей — не кликабелен
+      return { label };
+    }
+
+    return {
+      label,
+      command: () => router.push({ name: nav.name }),
+    };
+  };
+
+  return roots.map(buildItem);
 });
 
-const onUpdateIsHiddenEnterItems = (value: boolean) => {
-  isHiddenEnterItems.value = value
-}
+const menuItems = computed(() => {
+  // Главная навигация всегда берётся из БД. Кнопки "Войти/Профиль/Выйти" всегда справа.
+  return [...menuMainItems.value];
+});
 
 const passThrough = {
   rootlist: {

@@ -11,4 +11,7 @@ export default {
   getMyExercises: async () => {
     return await Repository.get(`${resource}/exercises`);
   },
+  getMySolvedTrainingOptions: async () => {
+    return await Repository.get(`${resource}/solved-training-options`);
+  },
 }

@@ -38,12 +38,18 @@ const routes = [
       {
         path: "create",
         name: "training-option-create",
-        component: () => import("@/pages/TrainingOption/TrainingOptionCreate.vue")
+        component: () => import("@/pages/TrainingOption/TrainingOptionCreate.vue"),
+        meta: {
+          requiredRoles: ["admin", "teacher"],
+        },
       },
       {
         path: "edit/:id",
         name: "training-option-edit",
-        component: () => import("@/pages/TrainingOption/TrainingOptionEdit.vue")
+        component: () => import("@/pages/TrainingOption/TrainingOptionEdit.vue"),
+        meta: {
+          requiredRoles: ["admin", "teacher"],
+        },
       },
       {
         path: ':hash',

@@ -10,9 +10,11 @@ class Nav extends Model
     use HasFactory;
 
     protected $fillable = [
+        'label',
         'name',
-        'url',
-        'component'
+        'component',
+        'is_active',
+        'parent_id',
     ];
 
     public $timestamps = false;

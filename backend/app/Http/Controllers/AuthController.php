@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,12 @@ class AuthController extends Controller
 
         $user = User::create($validatedData);
 
+        // default role: student
+        $studentRole = Role::where('slug', 'student')->first();
+        if ($studentRole) {
+            $user->roles()->syncWithoutDetaching([$studentRole->id]);
+        }
+
         Auth::login($user);
 
         return response()->json(['status' => 'success']);
@@ -35,7 +42,11 @@ class AuthController extends Controller
     }
 
     public function user() {
-        return Auth::user();
+        $u = Auth::user();
+        if (!$u) {
+            return null;
+        }
+        return $u->load('roles');
     }
 
     public function logout() {

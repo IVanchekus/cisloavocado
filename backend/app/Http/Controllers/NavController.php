@@ -18,7 +18,12 @@ class NavController extends Controller
         // - parent "authorization" показываем только если есть доступные дети
         $user = Auth::user();
         if (!$user) {
-            return $navs->whereNotIn('name', ['users', 'authorization'])->get();
+            return $navs->whereNotIn('name', [
+                'authorization',
+                'users',
+                'admin-users-roles',
+                'admin-roles',
+            ])->get();
         }
 
         $user->loadMissing('roles.permissions');

@@ -12,19 +12,19 @@ return new class extends Migration
             return;
         }
 
-        // Ранее роль admin выдавалась "первому пользователю".
-        // Теперь фиксируемся на системном админе по email.
+        // Создаём/обновляем системного админа
+        DB::table('users')->updateOrInsert(
+            ['email' => 'admin@mail.ru'],
+            [
+                'name' => 'Админ',
+                'password' => bcrypt('admin'),
+                'updated_at' => now(),
+                'created_at' => now(),
+            ],
+        );
+
         $adminUserId = DB::table('users')->where('email', 'admin@mail.ru')->value('id');
         if (!$adminUserId) {
-            return;
-        }
-
-        $exists = DB::table('role_user')
-            ->where('user_id', $adminUserId)
-            ->where('role_id', $adminRoleId)
-            ->exists();
-
-        if ($exists) {
             return;
         }
 
@@ -38,14 +38,14 @@ return new class extends Migration
     {
         $adminRoleId = DB::table('roles')->where('slug', 'admin')->value('id');
         $adminUserId = DB::table('users')->where('email', 'admin@mail.ru')->value('id');
-        if (!$adminRoleId || !$adminUserId) {
-            return;
+        if ($adminRoleId && $adminUserId) {
+            DB::table('role_user')
+                ->where('user_id', $adminUserId)
+                ->where('role_id', $adminRoleId)
+                ->delete();
         }
 
-        DB::table('role_user')
-            ->where('user_id', $adminUserId)
-            ->where('role_id', $adminRoleId)
-            ->delete();
+        DB::table('users')->where('email', 'admin@mail.ru')->delete();
     }
 };
 

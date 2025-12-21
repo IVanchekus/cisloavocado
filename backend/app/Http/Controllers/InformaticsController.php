@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exercise;
 use App\Models\TrainingOption;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InformaticsController extends Controller
 {
@@ -31,5 +32,16 @@ class InformaticsController extends Controller
             ->whereHas('exercises');
             
         return response()->json($trainingOptions->get());
+    }
+
+    public function getTrainingOptionsByUser() {
+        $trainingOptions = TrainingOption::select(['id', 'hash', 'name'])
+            ->where([
+                "subject_id" => 1,
+                "is_public" => true,
+                "is_approved" => true,
+                "user_id" => Auth::id()
+            ]);
+        return response()->json($trainingOptions->get()); 
     }
 }

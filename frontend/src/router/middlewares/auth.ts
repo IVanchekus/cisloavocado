@@ -23,5 +23,13 @@ export default async function authMiddleware(
 
   if (!isAuth && !toLoginRegister) next({ name: "login" });
   if (isAuth && toLoginRegister) next({ name: "home" });
+
+  const requiredRoles = (to.meta?.requiredRoles ?? null) as null | string[];
+  if (requiredRoles && requiredRoles.length) {
+    if (!authStore.hasAnyRole(requiredRoles)) {
+      next({ name: "home" });
+      return;
+    }
+  }
   next();
 }

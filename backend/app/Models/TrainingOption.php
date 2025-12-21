@@ -10,15 +10,21 @@ class TrainingOption extends Model
     use HasFactory;
 
     protected $fillable = [
+        'hash',
         'name',
         'description',
         'with_solution',
         'deadline',
         'user_id',
+        'subject_id',
+        'is_public',
+        'is_approved',
     ];
     protected $casts = [
         'with_solution' => 'boolean',
         'deadline' => 'datetime',
+        'is_public' => 'boolean',
+        'is_approved' => 'boolean',
     ];
 
     protected $appends = [
@@ -46,9 +52,17 @@ class TrainingOption extends Model
 
     public function getIsSolvedAttribute()
     {
-        return UserSolvedTrainingOption::where([
-            'user_id' => auth()->user()->id,
-            'training_option_id' => $this->id,
-        ])->exists();
+        $user = auth()->user();
+        if (!$user) {
+            return false;
+        }
+
+        // Вариант считается пройденным только если пользователь завершил его (is_solved = true).
+        // Запись может создаваться при первом открытии (started_at), это НЕ должно считаться прохождением.
+        return UserSolvedTrainingOption::query()
+            ->where('user_id', $user->id)
+            ->where('training_option_id', $this->id)
+            ->where('is_solved', true)
+            ->exists();
     }
 }

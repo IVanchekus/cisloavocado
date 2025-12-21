@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
             CategoryExerciseSeeder::class,
             LevelExerciseSeeder::class,
             SubjectSeeder::class,
+            ExerciseSeeder::class,
+            TrainingOptionSeeder::class,
         ]);
     }
 }

@@ -2,7 +2,7 @@
   <FullScreenLoader :is-blocked="globalStore.isLoading"/>
   <Navbar v-if="isShowNavbar" />
   <PageTemplate :style="{ height: pageTemplateHeight }">
-    <router-view></router-view>
+    <router-view :key="route.fullPath"></router-view>
   </PageTemplate>
 </template>
 

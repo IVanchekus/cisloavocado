@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exercise;
 use App\Models\TrainingOption;
 use App\Models\UserSolvedExercise;
 use App\Models\UserSolvedTrainingOption;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Uuid;
 
 class TrainingOptionController extends Controller
 {
@@ -81,5 +84,153 @@ class TrainingOptionController extends Controller
         $userSolvedTrainingOption->save();
 
         return response()->json(['message' => 'Answers saved successfully']);
+    }
+
+    public function createExercise(Request $request)
+    {
+        $validated = $request->validate([
+            'data.question' => 'required|string',
+            'data.solution' => 'required|string',
+            'data.answer' => 'required|string',
+        ]);
+
+        $data = $validated['data'];
+
+        $exercise = Exercise::create([
+            'question' => json_encode([
+                'ru' => $data['question'],
+                'en' => $data['question'],
+            ]),
+            'answer' => $data['answer'],
+            'solution' => json_encode([
+                'ru' => $data['solution'],
+                'en' => $data['solution'],
+            ]),
+            'user_id' => Auth::id(),
+            'subject_id' => 1,
+        ]);
+
+        return response()->json($exercise, 201);
+    }
+
+    public function updateExercise(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'data.question' => 'required|string',
+            'data.solution' => 'required|string',
+            'data.answer' => 'required|string',
+        ]);
+
+        $data = $validated['data'];
+
+        $exercise = Exercise::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $exercise->question = json_encode([
+            'ru' => $data['question'],
+            'en' => $data['question'],
+        ]);
+        $exercise->solution = json_encode([
+            'ru' => $data['solution'],
+            'en' => $data['solution'],
+        ]);
+        $exercise->answer = $data['answer'];
+
+        $exercise->save();
+
+        return response()->json($exercise);
+    }
+
+    public function getExercise($id)
+    {
+        $exercise = Exercise::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        return response()->json($exercise);
+    }
+
+    public function getTrainingOption($id)
+    {
+        $trainingOption = TrainingOption::with('exercises')
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        return response()->json($trainingOption);
+    }
+
+    public function createTrainingOption(Request $request)
+    {
+        $validated = $request->validate([
+            'data.name' => 'required|string',
+            'data.description' => 'nullable|string',
+            'data.exercise_ids' => 'array',
+            'data.exercise_ids.*' => 'integer|exists:exercises,id',
+        ]);
+
+        $data = $validated['data'];
+
+        $trainingOption = TrainingOption::create([
+            'hash' => Uuid::uuid4()->toString(),
+            'name' => json_encode([
+                'ru' => $data['name'],
+                'en' => $data['name'],
+            ]),
+            'description' => isset($data['description']) && $data['description'] !== null
+                ? json_encode([
+                    'ru' => $data['description'],
+                    'en' => $data['description'],
+                ])
+                : null,
+            'with_solution' => false,
+            'deadline' => null,
+            'user_id' => Auth::id(),
+            'subject_id' => 1,
+            'is_public' => true,
+            'is_approved' => true,
+        ]);
+
+        if (!empty($data['exercise_ids'])) {
+            $trainingOption->exercises()->sync($data['exercise_ids']);
+        }
+
+        return response()->json($trainingOption, 201);
+    }
+
+    public function updateTrainingOption(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'data.name' => 'required|string',
+            'data.description' => 'nullable|string',
+            'data.exercise_ids' => 'array',
+            'data.exercise_ids.*' => 'integer|exists:exercises,id',
+        ]);
+
+        $data = $validated['data'];
+
+        $trainingOption = TrainingOption::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $trainingOption->name = json_encode([
+            'ru' => $data['name'],
+            'en' => $data['name'],
+        ]);
+        $trainingOption->description = isset($data['description']) && $data['description'] !== null
+            ? json_encode([
+                'ru' => $data['description'],
+                'en' => $data['description'],
+            ])
+            : null;
+
+        $trainingOption->save();
+
+        if (isset($data['exercise_ids'])) {
+            $trainingOption->exercises()->sync($data['exercise_ids']);
+        }
+
+        return response()->json($trainingOption);
     }
 }

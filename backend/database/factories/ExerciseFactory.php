@@ -35,8 +35,8 @@ class ExerciseFactory extends Factory
             ]),
             'answer' => $this->faker->word(),
             'solution' => json_encode([
-                'ru' => $this->faker->text,
-                'en' => $this->faker->text
+                'ru' => $this->faker->text(2000),
+                'en' => $this->faker->text(2000)
             ]),
             'img_url' => $this->faker->imageUrl(),
             'video_url' => $this->faker->url(),

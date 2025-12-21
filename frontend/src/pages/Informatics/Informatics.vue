@@ -35,6 +35,13 @@ onMounted(async () => {
 })
 
 const onClickTrainingOption = (item: ITrainingOption) => {
+  if (!item.is_solved) {
+    router.push({
+      name: 'training-option-detail', params: { hash: item.hash }
+    })
+    return;
+  }
+
   confirm.require({
     message: 'Вы уверены, что хотите еще раз пройти этот вариант?',
     header: 'Подтверждение',

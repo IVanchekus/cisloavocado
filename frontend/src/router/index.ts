@@ -36,10 +36,47 @@ const routes = [
     redirect: { name: "home" },
     children: [
       {
+        path: "create",
+        name: "training-option-create",
+        component: () => import("@/pages/TrainingOption/TrainingOptionCreate.vue"),
+        meta: {
+          requiredRoles: ["admin", "teacher"],
+        },
+      },
+      {
+        path: "edit/:id",
+        name: "training-option-edit",
+        component: () => import("@/pages/TrainingOption/TrainingOptionEdit.vue"),
+        meta: {
+          requiredRoles: ["admin", "teacher"],
+        },
+      },
+      {
         path: ':hash',
         name: "training-option-detail",
         component: () => import("@/pages/TrainingOption/TrainingOption.vue")
       }
+    ]
+  },
+  {
+    path: "/profile/:id",
+    name: "profile",
+    component: () => import("@/pages/Profile/Profile.vue")
+  },
+  {
+    path: "/exercise",
+    name: "exercise",
+    children: [
+      {
+        path: "create",
+        name: "exercise-create",
+        component: () => import('@/pages/TrainingOption/ExerciseCreate.vue'),
+      },
+      {
+        path: "edit/:id",
+        name: "exercise-edit",
+        component: () => import('@/pages/TrainingOption/ExerciseEdit.vue'),
+      },
     ]
   }
 ];

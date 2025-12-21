@@ -32,7 +32,9 @@
               <tbody>
                 <tr v-for="row in solvedTrainingOptions" :key="row.id">
                   <td style="max-width: 520px;">
-                    {{ row.trainingOption?.name?.ru ?? '—' }}
+                    <div class="clamp-2">
+                      {{ row.trainingOption?.name?.ru ?? '—' }}
+                    </div>
                   </td>
                   <td>{{ row.mark ?? '—' }}</td>
                   <td>{{ row.verifier?.name ?? 'Не проверено' }}</td>
@@ -63,7 +65,7 @@
               :key="exercise.id"
               class="flex align-items-center justify-content-between gap-2 mb-2"
             >
-              <div class="flex-1" style="max-width: 600px; text-align: justify;">
+              <div class="flex-1 clamp-2" style="text-align: justify;">
                 {{ exercise.question?.ru }}
               </div>
               <Button
@@ -93,7 +95,7 @@
               :key="item.id"
               class="flex align-items-center justify-content-between gap-2 mb-2"
             >
-              <div class="flex-1" style="max-width: 600px; text-align: justify;">
+              <div class="flex-1 clamp-2" style="max-width: 600px; text-align: justify;">
                 {{ item.name?.ru }}
               </div>
               <div class="flex gap-2">
@@ -142,6 +144,21 @@ type TUser = {
   name?: string;
   email?: string;
 };
+
+type TSolvedTrainingOptionRow = {
+  id: number | string;
+  trainingOption?: {
+    name?: {
+      ru?: string;
+    };
+  };
+  mark?: number | string | null;
+  verifier?: {
+    name?: string | null;
+  };
+  verified_at?: string | null;
+  finished_at?: string | null;
+};
 const authStore = useAuthStore();
 const globalStore = useGlobalStore();
 const route = useRoute();
@@ -151,7 +168,7 @@ const user = ref<TUser>({});
 const isMyProfile = ref(false);
 const trainingOptions = ref<Array<ITrainingOption>>([]);
 const exercises = ref<Array<IExercise>>([]);
-const solvedTrainingOptions = ref<any[]>([]);
+const solvedTrainingOptions = ref<Array<TSolvedTrainingOptionRow>>([]);
 
 const canCreateExercises = computed(() => {
   return isMyProfile.value && authStore.hasAnyRole(["admin", "teacher"]);
@@ -290,5 +307,16 @@ const onEditTrainingOption = (item: ITrainingOption) => {
   max-height: 70vh;
   border: 1px solid var(--p-surface-200);
   border-radius: 10px;
+}
+
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+
+  /* важно для flex-контейнеров, иначе overflow может не сработать */
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 </style>
